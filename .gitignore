@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+
+# Input data (too large for version control; see README for acquisition)
+data/*.csv
+
+# Generated outputs (reproduced by running run_all.py)
+results/calendar_effects/*.csv
+results/calendar_effects/deviations/
+results/calendar_effects/heatmaps/
+paper/plots/*.png
+paper/plots/*.pdf
+
+# LaTeX build artefacts
+paper/*.aux
+paper/*.bbl
+paper/*.blg
+paper/*.log
+paper/*.out
+paper/*.synctex.gz
+paper/*.fls
+paper/*.fdb_latexmk
+paper/_minted*/
+
+# Secrets (never commit; use .env.example as template)
+.env
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# Claude Code
+.claude/settings.local.json

@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use this replication package, please cite the accompanying paper."
+title: "Replication package: Can shadow prices from energy system optimization models serve as reliable electricity price indicators?"
+type: software
+authors:
+  - family-names: Cäsar
+    given-names: Daniel
+    email: daniel.caesar@tuwien.ac.at
+    affiliation: "Energy System Economics Lab, Institute of Net-Zero Energy Systems, Technische Universität Wien, Austria"
+  - family-names: Neumann
+    given-names: Anne
+    affiliation: "Department of Industrial Economics and Technology Management, Norwegian University of Science and Technology, Trondheim, Norway"
+  - family-names: Zwickl-Bernhard
+    given-names: Sebastian
+    affiliation: "Energy System Economics Lab, Institute of Net-Zero Energy Systems, Technische Universität Wien, Austria; Department of Industrial Economics and Technology Management, Norwegian University of Science and Technology, Trondheim, Norway"
+license: MIT
+preferred-citation:
+  type: article
+  title: "Can shadow prices from energy system optimization models serve as reliable electricity price indicators?"
+  authors:
+    - family-names: Cäsar
+      given-names: Daniel
+    - family-names: Neumann
+      given-names: Anne
+    - family-names: Zwickl-Bernhard
+      given-names: Sebastian
+  year: 2026
