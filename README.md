@@ -6,7 +6,7 @@ Daniel Cäsar¹, Anne Neumann², Sebastian Zwickl-Bernhard¹,²
 ¹ Energy System Economics Lab, Institute of Net-Zero Energy Systems, Technische Universität Wien, Austria
 ² Department of Industrial Economics and Technology Management, Norwegian University of Science and Technology, Trondheim, Norway
 
-Corresponding author: Daniel Cäsar — daniel.caesar@tuwien.ac.at
+Corresponding author: Daniel Cäsar — caesar@eselab.tuwien.ac.at
 
 This package contains all data and code needed to reproduce every table,
 figure, and number reported in the paper. Table and figure numbers below refer
