@@ -1,5 +1,5 @@
 """
-config.py — Central parameter file for all analysis scripts.
+config.py — Settings shared by all scripts: countries, years, scenarios, clusters, and paths.
 
 Countries, years, scenarios, regions, and repository paths are defined here.
 All scripts import their configuration from this file.

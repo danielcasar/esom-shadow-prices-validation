@@ -1,5 +1,5 @@
 """
-plot_price_distribution.py — Figure C.2.
+figure_C02_price_distribution.py — Figure C.2: pooled hourly price distributions, 2025.
 
 Pooled hourly price distributions for the 2025 comparison year across the 22
 countries: ENTSO-E observed prices and GENeSYS-MOD shadow prices (averaged
@@ -8,7 +8,7 @@ plotted range [-50, 560] EUR/MWh are clipped into the edge bins.
 
 Inputs : data/ENTSOE_day_ahead_prices.csv, data/GENeSYS_MOD_prices.csv
 Output : results/figures/Figure_C2.pdf
-         results/tables/values_plot_price_distribution.csv
+         results/tables/values_figure_C02.csv
 """
 
 import matplotlib
@@ -18,7 +18,7 @@ import numpy as np
 import pandas as pd
 
 from config import COUNTRIES, ENTSOE_PRICES_FILE, GENESYS_PRICES_FILE, PLOTS_DIR
-from outputs import ValueLog
+from helpers import ValueLog
 
 YEAR = 2025
 LO, HI = -50, 560
@@ -27,7 +27,7 @@ GENESYS_COLOR = "#b2182b"
 
 
 def main():
-    log = ValueLog("plot_price_distribution")
+    log = ValueLog("figure_C02")
     plt.rcParams.update({
         "font.family": "sans-serif", "font.sans-serif": ["Arial"],
         "font.size": 9, "axes.labelsize": 9, "xtick.labelsize": 9,

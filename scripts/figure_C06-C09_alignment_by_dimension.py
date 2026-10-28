@@ -1,5 +1,5 @@
 """
-plot_pearson_benchmark.py
+figure_C06-C09_alignment_by_dimension.py — Figures C.6-C.9: model-market alignment by model year, one figure per dimension.
 
 Year-sensitivity Pearson benchmark figures, one per temporal dimension:
 dots are coloured by GENeSYS-MOD modelling year (2018 / 2025 / 2030),

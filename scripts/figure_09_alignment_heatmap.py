@@ -1,5 +1,5 @@
 ﻿"""
-plot_pearson_heatmap_distance.py
+figure_09_alignment_heatmap.py — Figure 9: model-market alignment relative to the benchmark.
 
 Heatmap of model-market Pearson alignment distance from the ENTSO-E benchmark.
 

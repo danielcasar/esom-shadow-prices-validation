@@ -1,5 +1,5 @@
 ﻿"""
-Stage 3: Profile-correlation analysis (Pearson r and Spearman ρ).
+05_stage3_pearson_vs_spearman.py — Stage 3 robustness check: Pearson and Spearman correlations of year-averaged profiles.
 
 For each (country, scenario, dimension):
   - ENTSO-E profile  = group-mean prices averaged over all ENTSO-E years

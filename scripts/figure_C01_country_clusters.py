@@ -1,5 +1,5 @@
 """
-Country clustering dendrogram (Figure C.1).
+figure_C01_country_clusters.py — Figure C.1: country clustering dendrogram.
 
 Hierarchical clustering of 22 European countries based on the cross-country
 Pearson similarity matrix (averaged over all four temporal dimensions and

@@ -1,5 +1,5 @@
 """
-tables.py — all tables of the paper and the numbers quoted in the text.
+08_tables.py — All tables of the paper, the Figure 1 data, and the numbers quoted in the text.
 
 Sections (in paper order):
   Figure 1     coordinates of the France price patterns (pooled medians)
@@ -13,7 +13,7 @@ Sections (in paper order):
 Inputs
 ------
 data/ENTSOE_day_ahead_prices.csv, data/GENeSYS_MOD_prices.csv
-results/intermediate/*.csv (written by the stage and compute_* scripts)
+results/intermediate/*.csv (written by scripts 01-07)
 
 Outputs
 -------
@@ -31,9 +31,9 @@ from scipy import stats
 from config import (CLUSTERS, COUNTRIES, ENTSOE_PRICES_FILE, ENTSOE_YEARS,
                     GENESYS_PRICES_FILE, GENESYS_YEARS, PLOTS_DIR, RESULTS_DIR,
                     SCENARIOS)
-from outputs import ValueLog, save_table
-from plot_annual_mean_prices import annual_means_entsoe, annual_means_genesys
-from plot_price_duration_curves import collect_entsoe_pdcs, collect_genesys_pdcs
+from helpers import ValueLog, save_table
+from figure_04_annual_prices import annual_means_entsoe, annual_means_genesys
+from figure_05_price_duration_curves import collect_entsoe_pdcs, collect_genesys_pdcs
 
 ALPHA = 0.05
 DIMS = ["hour", "weekday", "month", "season"]

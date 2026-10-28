@@ -1,5 +1,5 @@
 """
-compute_benchmark_correlations.py — Pearson correlations between price
+03_stage3_benchmark_correlations.py — Stage 3 benchmark: Pearson correlations between years and between countries.
 profiles of different years and of different countries.
 
 A "profile" is the vector of group-mean prices of one temporal dimension

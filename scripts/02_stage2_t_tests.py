@@ -1,5 +1,5 @@
 ﻿"""
-Stage 2: One-sample t-tests for calendar-effect groups.
+02_stage2_t_tests.py — Stage 2: one-sample t-tests of each calendar group against the annual mean.
 
 For each combination of (source, country, year [, scenario]):
   - compute the annual mean price mu_D across the full price series

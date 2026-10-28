@@ -1,5 +1,5 @@
 ﻿"""
-Stage 3 cross-year ENTSO-E heatmap.
+figure_C05_market_year_correlations.py — Figure C.5: cross-year correlations of ENTSO-E price patterns.
 
 Two combined 8×8 subplots, each showing two temporal dimensions:
   Left : upper triangle = Hour-of-Day, lower triangle = Day-of-Week

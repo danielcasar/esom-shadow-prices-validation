@@ -1,5 +1,5 @@
 """
-compute_compression_factors_2025.py
+06_compression_factors.py — Compression factors xi (ENTSO-E 2025 range / GENeSYS-MOD 2025 range).
 
 Compression factors xi_{dim,c} = ENTSOE_range / GENeSYS_range
 for each country and temporal dimension, using year 2025 for both datasets.

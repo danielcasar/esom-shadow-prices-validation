@@ -1,5 +1,5 @@
 """
-plot_price_duration_curve.py
+figure_05_price_duration_curves.py — Figure 5: price duration curves.
 
 Paper figure: Price duration curves — ENTSO-E vs. GENeSYS-MOD.
   - For each source: min/max band, IQR band, median line.

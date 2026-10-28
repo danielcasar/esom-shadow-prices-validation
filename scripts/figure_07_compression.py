@@ -1,5 +1,5 @@
 """
-plot_compression_by_year_and_cluster.py
+figure_07_compression.py — Figure 7: compression ratio by model year and country cluster.
 
 One figure, two panels:
   Left  — compression ratio (ENTSO-E pooled range / GENeSYS-MOD range) vs.

@@ -1,5 +1,5 @@
 """
-plot_stage2_profiles.py
+figure_06_temporal_profiles.py — Figure 6: temporal price profiles in the four calendar dimensions.
 
 Paper figure: Stage 2 price deviation profiles — ENTSO-E vs. GENeSYS-MOD.
 
