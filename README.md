@@ -14,6 +14,27 @@ to the revised manuscript (appendices A–C).
 
 ---
 
+## Overview
+
+The paper compares the temporal structure of hourly shadow prices from the
+energy system optimization model GENeSYS-MOD with observed ENTSO-E day-ahead
+prices for 22 European countries, at four temporal resolutions (hour of day,
+day of week, month of year, season). The analysis has three stages, which the
+scripts follow:
+
+1. **Pattern existence:** Kruskal–Wallis tests per country, scenario, and
+   resolution (`stage1_kruskal_wallis.py`).
+2. **Pattern magnitude:** one-sample t-tests of each calendar group against
+   the annual mean, giving the group-mean deviation profiles and the
+   compression factors (`stage2_t_tests.py`, `compute_compression_factors.py`).
+3. **Pattern alignment:** Pearson correlations between model and market
+   profiles, benchmarked against the correlation between observed market
+   years (`compute_*_pearson.py`, `stage3_pearson_correlations.py`).
+
+The methods are described in Section 2 of the paper.
+
+---
+
 ## Quick start
 
 ```bash
