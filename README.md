@@ -21,17 +21,7 @@ pip install -r requirements.txt
 python scripts/run_all.py
 ```
 
-`run_all.py` runs the complete analysis (29 steps, 5–10 minutes on a
-standard laptop) from the data in `data/` and writes all outputs to `results/`.
-
-**Software.** Tested with Python 3.14.3 on Windows 11 using the package
-versions pinned in `requirements.txt` (pandas 3.0.0, numpy 2.4.2,
-scipy 1.17.0, matplotlib 3.10.8). Figures use the Arial font; matplotlib falls
-back to its default font if Arial is not installed, which changes only the
-typeface.
-
-**Determinism.** All computations are deterministic. Bootstrap confidence
-intervals use `numpy.random.default_rng(42)` with 10,000 draws.
+`run_all.py` runs the complete analysis from the data in `data/` and writes all outputs to `results/`.
 
 ---
 
