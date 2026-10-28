@@ -6,11 +6,33 @@ Daniel Cäsar¹, Anne Neumann², Sebastian Zwickl-Bernhard¹,²
 ¹ Energy System Economics Lab, Institute of Net-Zero Energy Systems, Technische Universität Wien, Austria
 ² Department of Industrial Economics and Technology Management, Norwegian University of Science and Technology, Trondheim, Norway
 
-Corresponding author: Daniel Cäsar — daniel.caesar@tuwien.ac.at
+Corresponding author: Daniel Cäsar — caesar@eselab.tuwien.ac.at
 
 This package contains all data and code needed to reproduce every table,
 figure, and number reported in the paper. Table and figure numbers below refer
 to the revised manuscript (appendices A–C).
+
+---
+
+## Overview
+
+The paper compares the temporal structure of hourly shadow prices from the
+energy system optimization model GENeSYS-MOD with observed ENTSO-E day-ahead
+prices for 22 European countries, at four temporal resolutions (hour of day,
+day of week, month of year, season). The analysis has three stages, which the
+scripts follow:
+
+1. **Pattern existence:** Kruskal–Wallis tests per country, scenario, and
+   resolution (`stage1_kruskal_wallis.py`).
+2. **Pattern magnitude:** one-sample t-tests of each calendar group against
+   the annual mean, giving the group-mean deviation profiles and the
+   compression factors (`stage2_t_tests.py`, `compute_compression_factors.py`).
+3. **Pattern alignment:** Pearson correlations between model and market
+   profiles, benchmarked against the correlation between observed market
+   years (`compute_benchmark_correlations.py`,
+   `compute_model_market_correlations.py`, `stage3_pearson_correlations.py`).
+
+The methods are described in Section 2 of the paper.
 
 ---
 
@@ -21,17 +43,7 @@ pip install -r requirements.txt
 python scripts/run_all.py
 ```
 
-`run_all.py` runs the complete analysis (29 steps, 5–10 minutes on a
-standard laptop) from the data in `data/` and writes all outputs to `results/`.
-
-**Software.** Tested with Python 3.14.3 on Windows 11 using the package
-versions pinned in `requirements.txt` (pandas 3.0.0, numpy 2.4.2,
-scipy 1.17.0, matplotlib 3.10.8). Figures use the Arial font; matplotlib falls
-back to its default font if Arial is not installed, which changes only the
-typeface.
-
-**Determinism.** All computations are deterministic. Bootstrap confidence
-intervals use `numpy.random.default_rng(42)` with 10,000 draws.
+`run_all.py` runs the complete analysis from the data in `data/` and writes all outputs to `results/`.
 
 ---
 
@@ -71,51 +83,33 @@ Transparency Platform terms of use.
 
 ## Output mapping
 
-Every exhibit is produced by the scripts listed below, all called by
-`run_all.py`. Figures are written to `results/figures/`, tables to
-`results/tables/`.
+All outputs are named by their number in the paper.
 
-### Main text
+**Tables.** `tables.py` produces all computed tables from the intermediate
+results and writes them to `results/tables/Table_<number>.csv` (e.g.
+`Table_C5.csv`). It also writes every number quoted in the text, each labelled
+with its location in the paper, to `results/tables/values_tables.csv`; the
+value factors (Section 4.2) come from `compute_value_factors.py`.
 
-| Exhibit | Script(s) | Output |
-|---------|-----------|--------|
-| Figure 1 | `figure_1_france_patterns.py` | `Figure_1_data.csv` (coordinates; the figure is drawn with pgfplots in the manuscript) |
-| Figures 2–3, Tables 1–3 | — | Conceptual figures and descriptive tables, no computation |
-| Table 4 | `compute_entsoe_cross_country_pearson.py`, `compute_genesys_cross_country_pearson.py`, `table_4_country_clusters.py` | `Table_4.csv` |
-| Table 5 | `table_5_distribution_metrics.py` | `Table_5.csv` |
-| Figure 4 | `plot_annual_mean_prices.py` | `Figure_4.pdf` |
-| Figure 5 | `plot_price_duration_curves.py` | `Figure_5.pdf` |
-| Figure 6 | `stage2_t_tests.py`, `plot_dimension_profiles.py` | `Figure_6.pdf` |
-| Table 6 | `stage1_kruskal_wallis.py`, `tables_stage1_stage2.py` | `Table_6.csv` |
-| Table 7 | `stage2_t_tests.py`, `tables_stage1_stage2.py` | `Table_7.csv` |
-| Figure 7 | `stage2_t_tests.py`, `plot_compression_factors.py` | `Figure_7.pdf` |
-| Figure 8 | `compute_entsoe_cross_year_pearson.py`, `plot_pearson_stability_decay.py` | `Figure_8.pdf` |
-| Table 8 | `tables_benchmark.py` | `values_tables_benchmark.csv` |
-| Figure 9 | `compute_genesys_vs_entsoe_year_pearson.py`, `plot_pearson_alignment_heatmap.py` | `Figure_9.pdf` |
-| Table 9 | `tables_spreads.py` | `Table_9.csv` (model and ENTSO-E columns; literature ranges are taken from the cited studies) |
-| Table 10 | — | Guidelines derived from Figures 9, C.6–C.9 and Table C.5 |
-| Table 11 | `compute_compression_factors.py`, `tables_spreads.py` | `Table_11.csv` |
+**Figures.** Each figure has its own script, which writes
+`results/figures/Figure_<number>.pdf`:
 
-### Appendix C
-
-| Exhibit | Script(s) | Output |
-|---------|-----------|--------|
-| Tables C.1–C.2 | — | Limitations and country list, no computation |
-| Figure C.1 | `plot_country_clusters.py` | `Figure_C1.pdf` |
-| Table C.3 | `tables_stage1_stage2.py` | `Table_C3.csv` |
-| Figure C.2 | `plot_price_distribution.py` | `Figure_C2.pdf` |
-| Figure C.3 | `plot_genesys_cross_scenario_heatmap.py` | `Figure_C3.pdf` |
-| Figure C.4 | `plot_genesys_cross_year_heatmap.py` | `Figure_C4.pdf` |
-| Figure C.5 | `plot_entsoe_cross_year_heatmap.py` | `Figure_C5.pdf` |
-| Table C.4 | `tables_benchmark.py` | `Table_C4.csv` |
-| Figures C.6–C.9 | `plot_pearson_benchmark.py` | `Figure_C6.pdf` … `Figure_C9.pdf` |
-| Figure C.10 | `stage3_pearson_correlations.py`, `plot_pearson_vs_spearman.py` | `Figure_C10.pdf` |
-| Table C.5 | `compute_compression_factors.py`, `tables_spreads.py` | `Table_C5.csv` |
-| Table C.6 | `tables_spreads.py` | `Table_C6.csv` |
-
-Numbers quoted in the text but not shown in a table or figure (e.g. the value
-factors and daily spreads in Section 4.2) are written to
-`results/tables/values_<script>.csv`, each labelled with its section.
+| Figure | Script |
+|--------|--------|
+| 1 | `tables.py` (coordinates in `Figure_1_data.csv`; the figure is drawn in the manuscript) |
+| 4 | `plot_annual_mean_prices.py` |
+| 5 | `plot_price_duration_curves.py` |
+| 6 | `plot_dimension_profiles.py` |
+| 7 | `plot_compression_factors.py` |
+| 8 | `plot_pearson_stability_decay.py` |
+| 9 | `plot_pearson_alignment_heatmap.py` |
+| C.1 | `plot_country_clusters.py` |
+| C.2 | `plot_price_distribution.py` |
+| C.3 | `plot_genesys_cross_scenario_heatmap.py` |
+| C.4 | `plot_genesys_cross_year_heatmap.py` |
+| C.5 | `plot_entsoe_cross_year_heatmap.py` |
+| C.6–C.9 | `plot_pearson_benchmark.py` |
+| C.10 | `plot_pearson_vs_spearman.py` |
 
 ---
 

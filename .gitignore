@@ -1,26 +1,8 @@
-# Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.Python
-*.egg-info/
-dist/
-build/
-
-# Generated outputs (reproduced by running scripts/run_all.py)
+# Outputs, recreated by scripts/run_all.py
 results/
 
-# Secrets (never commit)
+# Python cache
+__pycache__/
+
+# Local secrets
 .env
-
-# Editor / OS
-.vscode/
-.idea/
-.DS_Store
-Thumbs.db
-*.swp
-*~
-
-# Claude Code
-.claude/settings.local.json
