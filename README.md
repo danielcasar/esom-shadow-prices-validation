@@ -89,9 +89,7 @@ All outputs are named by their number in the paper.
 results and writes them to `results/tables/Table_<number>.csv` (e.g.
 `Table_C5.csv`). It also writes every number quoted in the text, each labelled
 with its location in the paper, to `results/tables/values_tables.csv`; the
-value factors (Section 4.2) come from `compute_value_factors.py`. Tables 1–3,
-10, C.1, and C.2 are descriptive and involve no computation; the literature
-ranges in Table 9 are taken from the cited studies.
+value factors (Section 4.2) come from `compute_value_factors.py`.
 
 **Figures.** Each figure has its own script, which writes
 `results/figures/Figure_<number>.pdf`:
@@ -112,8 +110,6 @@ ranges in Table 9 are taken from the cited studies.
 | C.5 | `plot_entsoe_cross_year_heatmap.py` |
 | C.6–C.9 | `plot_pearson_benchmark.py` |
 | C.10 | `plot_pearson_vs_spearman.py` |
-
-Figures 2 and 3 are conceptual diagrams.
 
 ---
 
