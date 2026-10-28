@@ -113,36 +113,9 @@ Every exhibit is produced by the scripts listed below, all called by
 | Table C.5 | `compute_compression_factors.py`, `tables_spreads.py` | `Table_C5.csv` |
 | Table C.6 | `tables_spreads.py` | `Table_C6.csv` |
 
-### Numbers quoted in the text
-
-| Location | Script | Output |
-|----------|--------|--------|
-| Abstract (compression factors) | `table_5_distribution_metrics.py` | `values_table_5_distribution_metrics.csv` |
-| Section 2.2.3 (footnote on shared price nodes) | `table_4_country_clusters.py` | `values_table_4_country_clusters.csv` |
-| Section 3.1 (ranges for Figures 4–6) | `table_5_distribution_metrics.py` | `values_table_5_distribution_metrics.csv` |
-| Section 3.2 (effect-size ratios, non-significant combinations) | `tables_stage1_stage2.py` | `values_tables_stage1_stage2.csv`, console |
-| Section 3.4.1 (bootstrap CI widths) | `tables_benchmark.py` | `bootstrap_ci_by_lag.csv` |
-| Section 3.4.2 (footnote on model years after 2030) | `compute_extended_years_pearson.py`, `tables_benchmark.py` | `values_tables_benchmark.csv` |
-| Section 3.4.3 (Pearson vs. Spearman MAE) | `tables_benchmark.py` | `values_tables_benchmark.csv` |
-| Section 4.2 (daily spreads) | `tables_spreads.py` | `values_tables_spreads.csv` |
-| Section 4.2 (value factors) | `compute_value_factors.py` | `values_compute_value_factors.csv` |
-
-Each `values_*.csv` in `results/tables/` lists `exhibit, item, value` for the
-numbers a script contributes to the paper.
-
----
-
-## Data preparation (not part of `run_all.py`)
-
-`prepare_vre_generation.py` documents how the two small solar/wind files in
-`data/` were extracted from the full ENTSO-E generation file (139 MB) and the
-GENeSYS-MOD production output (1.08 GB), which are not included. It is not
-needed for the replication.
-
-The retrieval and processing of all input files are described in
-`data/README.md`. A fresh ENTSO-E download can differ slightly from the
-shipped files because ENTSO-E revises published data; use the shipped files to
-reproduce the paper.
+Numbers quoted in the text but not shown in a table or figure (e.g. the value
+factors and daily spreads in Section 4.2) are written to
+`results/tables/values_<script>.csv`, each labelled with its section.
 
 ---
 

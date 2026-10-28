@@ -9,10 +9,6 @@ directory:
 
 Expected runtime: 5–10 minutes on a standard laptop. Outputs are written to
 results/ (figures, tables, intermediate), which is created on the first run.
-
-The data-preparation script prepare_vre_generation.py is not run here; it
-documents how two files in data/ were extracted from large raw source files
-that are not included (see data/README.md).
 """
 
 import os
