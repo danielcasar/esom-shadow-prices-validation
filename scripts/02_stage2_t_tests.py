@@ -1,17 +1,22 @@
 ﻿"""
 02_stage2_t_tests.py — Stage 2: one-sample t-tests of each calendar group against the annual mean.
 
-For each combination of (source, country, year [, scenario]):
-  - compute the annual mean price mu_D across the full price series
-  - for each temporal dimension (hour, weekday, month, season) and
-    each group g within that dimension, test H0: mu_g = mu_D via a
-    one-sample t-test (scipy.stats.ttest_1samp, two-sided)
-  - record Δ_g = mu_g - mu_D  (€/MWh)
-  - record Δ_g% = Δ_g / mu_D * 100  (%)
-  - p-values are unadjusted; significance threshold α = 0.05
+For each country x year (ENTSO-E, 2018-2025) and country x scenario x year
+(GENeSYS-MOD, 2018/2025/2030), and for each group g of each temporal
+dimension (Section 2.1.2):
+  - one-sample t-test of H0: mean of group g = annual mean (two-sided)
+  - deviation = group mean - annual mean (EUR/MWh), and in % of the annual mean
+  - p-values are unadjusted (alpha = 0.05); the multiple-testing corrections
+    of Table C.3 are applied in 08_tables.py
 
-Outputs:
-  results/intermediate/stage2_ttest_groups_detail.csv
+Outputs
+-------
+results/intermediate/stage2_ttest_groups_detail.csv
+    one row per group test
+results/intermediate/deviation_summary.csv
+    per country x dimension x scenario: range (max - min) of all group
+    deviations pooled over all years, for ENTSO-E and GENeSYS-MOD, and their
+    ratio (Figure 7, right panel)
 """
 
 import os
@@ -134,7 +139,7 @@ def stage2_ttests(
     ----------
     df       : price DataFrame with temporal dimension columns attached
     source   : 'ENTSOE' or 'GENeSYS-MOD'
-    scenario : scenario label (e.g. 'Historical' or 'GreenHydrogen')
+    scenario : scenario label (e.g. 'Historical' or 'GoRES')
     country  : ISO country code
     year     : calendar year of the data slice
 

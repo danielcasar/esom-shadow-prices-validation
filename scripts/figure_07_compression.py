@@ -1,14 +1,13 @@
 """
 figure_07_compression.py — Figure 7: compression ratio by model year and country cluster.
 
-One figure, two panels:
-  Left  — compression ratio (ENTSO-E pooled range / GENeSYS-MOD range) vs.
-           GENeSYS modelling year (2018, 2025, 2030), one line per temporal dimension.
-  Right — same compression ratio vs. country cluster, one line per temporal dimension.
-
-"Compression ratio" = ξ = ENTSO-E range / model range.
-  A value of 1 means the model reproduces the full ENTSO-E amplitude.
-  A value > 1 means the model underestimates price variability.
+Compression ratio = ENTSO-E range / GENeSYS-MOD range, where a range is the
+max - min of group-mean deviations from the annual mean.
+  Left panel (by model year): ranges per country and year; GENeSYS-MOD median
+      over scenarios and then over countries, ENTSO-E median over countries
+      for the same year (ENTSO-E 2025 for model year 2030).
+  Right panel (by cluster): per country and scenario, ratio of the ranges
+      pooled over all years (deviation_summary.csv); median within cluster.
 
 Input:  results/intermediate/stage2_ttest_groups_detail.csv
         results/intermediate/deviation_summary.csv

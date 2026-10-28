@@ -1,10 +1,10 @@
 """
 figure_05_price_duration_curves.py — Figure 5: price duration curves.
 
-Paper figure: Price duration curves — ENTSO-E vs. GENeSYS-MOD.
-  - For each source: min/max band, IQR band, median line.
-  - ENTSO-E series:  country × year  (20 countries × 8 years)
-  - GENeSYS series:  country × scenario × year  (20 × 4 × 3)
+Hourly prices of each series sorted in descending order and interpolated onto
+a common grid of shares of hours. Lines: median across series; shading: IQR
+(25th-75th percentile). Series: ENTSO-E country x year (22 x 8) and
+GENeSYS-MOD country x scenario x year (22 x 4 x 3).
 
 Output: results/figures/Figure_5.pdf
 """

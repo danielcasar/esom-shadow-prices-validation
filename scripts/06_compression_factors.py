@@ -1,24 +1,16 @@
 """
 06_compression_factors.py — Compression factors xi (ENTSO-E 2025 range / GENeSYS-MOD 2025 range).
 
-Compression factors xi_{dim,c} = ENTSOE_range / GENeSYS_range
-for each country and temporal dimension, using year 2025 for both datasets.
-
-Methodology
------------
-For each country and dimension:
-  1. Compute price deviation from the annual mean: dev_t = price_t - mean(price)
-  2. Compute group-mean deviation: mean of dev_t within each temporal group
-     (e.g., group = hour-of-day 0..23)
-  3. Range = max(group_mean) - min(group_mean)
-
-ENTSOE:  single 2025 observation (8760 hourly rows)
-GENeSYS: 4 scenarios × 8760 hours; range = median across 4 scenarios
+For each country and temporal dimension (Table C.5):
+  1. deviation of each hourly 2025 price from the 2025 annual mean
+  2. mean deviation per group (e.g. per hour of day)
+  3. range = max - min of the group-mean deviations
+xi = ENTSO-E range / GENeSYS-MOD range, where the GENeSYS-MOD range is the
+median of the four scenario ranges.
 
 Output
 ------
-  results/intermediate/compression_factors_2025.csv
-  Console: LaTeX table rows for copy-paste into main.tex
+results/intermediate/compression_factors_2025.csv
 """
 
 import numpy as np
@@ -170,17 +162,3 @@ print(pivot.round(1).to_string())
 
 medians = pivot.median()
 print(f"\nMedian across countries: {medians.round(1).to_dict()}")
-
-
-# ── LaTeX table rows ──────────────────────────────────────────────────────────
-print("\n=== LaTeX table rows (copy into main.tex) ===\n")
-for c in COUNTRIES:
-    if c in pivot.index:
-        row = pivot.loc[c]
-        vals = " & ".join(
-            f"{row[d]:5.1f}" if pd.notna(row[d]) else r"   ---"
-            for d in DIMS
-        )
-        print(f"{c} & {vals} \\\\")
-    else:
-        print(f"{c} &   --- &   --- &   --- &   --- \\\\")

@@ -1,26 +1,22 @@
 ﻿"""
 figure_09_alignment_heatmap.py — Figure 9: model-market alignment relative to the benchmark.
 
-Heatmap of model-market Pearson alignment distance from the ENTSO-E benchmark.
+Rows: dimension x model year (12); columns: country clusters (10).
+Cell: absolute distance of the cluster-mean model-market rho from the 95%
+bootstrap CI of the cluster-median ENTSO-E cross-year rho (0 = within the CI).
 
-Rows : dimension × modelling year  (4 dims × 3 years = 12)
-Cols : country cluster              (10 clusters)
-Color: signed distance from the 95% bootstrap CI of the ENTSO-E cross-year benchmark
-         0              -> within the CI
-         positive (blue) -> above CI upper bound  (model exceeds benchmark)
-         negative (red)  -> below CI lower bound  (model falls short)
-
-Benchmark design (matches main analysis):
-  Hour-of-Day  2018/2025 : adjacent ENTSO-E year pairs (lag = 1)
-  Hour-of-Day  2030      : 5-year ENTSO-E pairs, excl. crisis
-  Day-of-Week  all years : all ENTSO-E year pairs
-  Month-of-Year all years: all ENTSO-E pairs, excl. crisis year 2022
-  Season        all years: all ENTSO-E pairs, excl. crisis year 2022
+Benchmark (ENTSO-E cross-year pairs, Table 8):
+  Hour-of-Day: adjacent years (lag 1) for model years 2018 and 2025,
+               5-year pairs for model year 2030
+  Other dimensions: all year pairs
+Model-market rho (mean over countries, scenarios, and ENTSO-E years):
+  Hour-of-Day 2018 / 2025: ENTSO-E year = model year
+  Hour-of-Day 2030: all ENTSO-E years except 2021 and 2022
+  Other dimensions: all ENTSO-E years
 
 Inputs:
   results/intermediate/genesys_vs_entsoe_year_pearson.csv
   results/intermediate/entsoe_cross_year_pearson.csv
-
 Output:
   results/figures/Figure_9.pdf
 """
