@@ -76,8 +76,8 @@ MW).
 (onshore + offshore). Countries without a reported solar or wind series have
 no column.
 
-**Processing.** Extracted from the full 2018–2025 generation file (139 MB, not
-included) with `scripts/prepare_vre_generation.py`.
+**Processing.** Extracted from the full 2018–2025 generation download (solar
+and the sum of onshore and offshore wind, 22 analysis countries, 2025).
 
 ## Solar and wind production (model) — `GENeSYS_MOD_vre_production_2025.csv`
 
@@ -89,9 +89,9 @@ included) with `scripts/prepare_vre_generation.py`.
 sector), `Timeslice` (hour of the model year of the 72 representative
 timeslices), `production` (PJ).
 
-**Processing.** Extracted with `scripts/prepare_vre_generation.py`
-(model year 2025, power sector, 22 analysis countries, all four scenarios;
-the analysis uses GoRES = `Green_CO2_exo_globalLimit`).
+**Processing.** Extracted for model year 2025, power sector, 22 analysis
+countries and all four scenarios, summing production over all PV and all wind
+technologies (the analysis uses GoRES = `Green_CO2_exo_globalLimit`).
 
 ## References
 

@@ -8,10 +8,6 @@ __pycache__/
 dist/
 build/
 
-# Large raw source files used only by the data-preparation scripts
-# (see data/README.md); the analysis inputs in data/ are tracked
-data/raw/
-
 # Generated outputs (reproduced by running scripts/run_all.py)
 results/
 
