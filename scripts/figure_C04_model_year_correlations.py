@@ -1,19 +1,13 @@
 ﻿"""
 figure_C04_model_year_correlations.py — Figure C.4: cross-year correlations of GENeSYS-MOD price patterns.
 
-Cross-year GENeSYS-MOD Pearson ρ heatmap — companion to Fig 10.
-
-For each scenario: a 2-panel figure with dual-triangle 3×3 heatmaps,
-matching the style of Figure C.5.
-  Left panel : upper triangle = Hour-of-Day, lower = Day-of-Week
-  Right panel: upper triangle = Month-of-Year, lower = Season
-
-ρ for each cell = mean over COUNTRIES of Pearson ρ between the
-group-mean price profiles of year1 vs year2.
-Diagonal = 1 (same year).
+Pearson rho between the group-mean price profiles of two model years
+(2018, 2025, 2030), averaged over countries per scenario and then over the
+four scenarios. Two panels with 3x3 dual-triangle matrices:
+  Left : upper triangle = Hour-of-Day, lower = Day-of-Week
+  Right: upper triangle = Month-of-Year, lower = Season
 
 Output: results/figures/Figure_C4.pdf
-        (one file per scenario)
 """
 
 import warnings

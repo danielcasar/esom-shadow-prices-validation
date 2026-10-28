@@ -1,14 +1,16 @@
 ﻿"""
 01_stage1_kruskal_wallis.py — Stage 1: Kruskal-Wallis tests for calendar effects (input to Table 6).
 
-For each combination of (source, country [, scenario]):
-  - test H0: all temporal groups share the same central tendency
-    via the non-parametric Kruskal-Wallis H-test
-  - compute effect size ε² = H / (N - 1) with 95 % CI
+For each country (ENTSO-E, 2018-2025 pooled), each country x scenario
+(GENeSYS-MOD, 2018/2025/2030 pooled), and each temporal dimension:
+  - Kruskal-Wallis test of H0: all groups of the dimension have identical
+    price distributions (Section 2.1.1)
+  - effect size epsilon-squared = H / (N - 1); its 95% CI is computed but not
+    reported in the paper
 
-Outputs
--------
-results/intermediate/stage1_kw_pooled.csv   (pooled over all years)
+Output
+------
+results/intermediate/stage1_kw_pooled.csv
 """
 
 import os

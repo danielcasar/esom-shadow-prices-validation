@@ -1,10 +1,11 @@
 """
 figure_08_benchmark_stability.py — Figure 8: cross-year stability of ENTSO-E price patterns.
 
-Plots mean ENTSO-E cross-year Pearson rho (averaged across all countries)
-as a function of temporal distance (lag in years), separately for each
-of the four temporal dimensions.
+For each temporal dimension: median ENTSO-E cross-year Pearson rho over all
+countries and year pairs with the same temporal distance (lag), with the IQR
+as shaded band.
 
+Input : results/intermediate/entsoe_cross_year_pearson.csv
 Output: results/figures/Figure_8.pdf
 """
 

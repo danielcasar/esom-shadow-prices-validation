@@ -1,22 +1,20 @@
 """
 figure_C06-C09_alignment_by_dimension.py — Figures C.6-C.9: model-market alignment by model year, one figure per dimension.
 
-Year-sensitivity Pearson benchmark figures, one per temporal dimension:
-dots are coloured by GENeSYS-MOD modelling year (2018 / 2025 / 2030),
-pooled across the four decarbonisation scenarios (one dot per cluster
-per year). Shaded bar = 95 % bootstrap CI of the cluster-median
-ENTSO-E cross-year rho.
+Dots: cluster-mean model-market Pearson rho per model year (2018, 2025,
+2030), pooled across the four scenarios. Shaded bars: 95% bootstrap CI of the
+cluster-median ENTSO-E cross-year rho (10,000 resamples). Benchmark and
+model-market rho are defined as in Figure 9:
+  Hour-of-Day: model years 2018/2025 vs. the same ENTSO-E year, benchmark of
+               adjacent-year pairs; model year 2030 vs. all ENTSO-E years
+               except 2021 and 2022, benchmark of 5-year pairs
+  Other dimensions: all ENTSO-E years, benchmark of all year pairs
 
 Inputs:
   results/intermediate/genesys_vs_entsoe_year_pearson.csv
   results/intermediate/entsoe_cross_year_pearson.csv
-
-Outputs (results/figures/):
-  Figure_C6.pdf  Hour-of-Day  (left bar = 2018+2025 vs. ENTSO-E year-matched;
-                               right bar = 2030 vs. non-crisis ENTSO-E)
-  Figure_C7.pdf  Day-of-Week
-  Figure_C8.pdf  Month-of-Year
-  Figure_C9.pdf  Season
+Outputs (results/figures/): Figure_C6.pdf (Hour-of-Day), Figure_C7.pdf
+  (Day-of-Week), Figure_C8.pdf (Month-of-Year), Figure_C9.pdf (Season)
 """
 
 import numpy as np

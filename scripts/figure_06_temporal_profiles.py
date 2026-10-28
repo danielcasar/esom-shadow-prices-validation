@@ -1,12 +1,9 @@
 """
 figure_06_temporal_profiles.py — Figure 6: temporal price profiles in the four calendar dimensions.
 
-Paper figure: Stage 2 price deviation profiles — ENTSO-E vs. GENeSYS-MOD.
-
-Each of the four calendar dimensions gets one panel:
-  Mean deviation from overall mean (€/MWh), ±1 std band across countries.
-  ENTSO-E = black solid line / dark fill
-  GENeSYS-MOD = red dashed line / red fill  (all scenarios pooled)
+One panel per dimension: group-mean deviation from the annual mean (EUR/MWh).
+Lines: median across country-years (ENTSO-E) or country-scenario-years
+(GENeSYS-MOD); shading: IQR (25th-75th percentile).
 
 Input : results/intermediate/stage2_ttest_groups_detail.csv
 Output: results/figures/Figure_6.pdf
