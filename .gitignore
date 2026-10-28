@@ -8,28 +8,14 @@ __pycache__/
 dist/
 build/
 
-# Input data (too large for version control; see README for acquisition)
-data/*.csv
+# Large raw source files used only by the data-preparation scripts
+# (see data/README.md); the analysis inputs in data/ are tracked
+data/raw/
 
-# Generated outputs (reproduced by running run_all.py)
-results/calendar_effects/*.csv
-results/calendar_effects/deviations/
-results/calendar_effects/heatmaps/
-paper/plots/*.png
-paper/plots/*.pdf
+# Generated outputs (reproduced by running scripts/run_all.py)
+results/
 
-# LaTeX build artefacts
-paper/*.aux
-paper/*.bbl
-paper/*.blg
-paper/*.log
-paper/*.out
-paper/*.synctex.gz
-paper/*.fls
-paper/*.fdb_latexmk
-paper/_minted*/
-
-# Secrets (never commit; use .env.example as template)
+# Secrets (never commit)
 .env
 
 # Editor / OS
