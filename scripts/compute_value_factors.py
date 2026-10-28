@@ -18,7 +18,6 @@ Inputs
 ------
 data/ENTSOE_day_ahead_prices.csv, data/ENTSOE_vre_generation_2025.csv
 data/GENeSYS_MOD_prices.csv,      data/GENeSYS_MOD_vre_production_2025.csv
-(the two *_vre_* extracts are produced by prepare_vre_generation.py)
 
 Outputs
 -------
