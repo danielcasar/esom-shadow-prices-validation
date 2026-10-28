@@ -5,12 +5,10 @@ For each combination of (source, country [, scenario]):
   - test H0: all temporal groups share the same central tendency
     via the non-parametric Kruskal-Wallis H-test
   - compute effect size ε² = H / (N - 1) with 95 % CI
-  - repeat per year (yearly slice)
 
 Outputs
 -------
 results/intermediate/stage1_kw_pooled.csv   (pooled over all years)
-results/intermediate/stage1_kw_yearly.csv  (one row per country-year)
 """
 
 import os
@@ -209,7 +207,6 @@ if __name__ == '__main__':
     print('=' * 70)
 
     pooled_rows = []
-    yearly_rows = []
 
     # ---- ENTSO-E -----------------------------------------------------------
     print(f'\nENTSO-E  |  {len(COUNTRIES)} countries  ×  {len(ENTSOE_YEARS)} years (pooled)')
@@ -224,23 +221,6 @@ if __name__ == '__main__':
                if (r := kruskal_wallis(df, dim)) is not None}
         pooled_rows.extend(_build_rows(key, res))
 
-        # Per year
-        for year in sorted(df['year'].unique()):
-            df_y = df[df['year'] == year]
-            if len(df_y) < 100:
-                continue
-            for dim in TIME_DIMENSIONS:
-                r = kruskal_wallis(df_y, dim)
-                if r is None:
-                    continue
-                yearly_rows.append({
-                    'source': 'ENTSOE', 'scenario': 'Historical',
-                    'country': country, 'year': int(year), 'dimension': dim,
-                    **{k: r[k] for k in ('test', 'statistic', 'p_value',
-                                          'effect_size', 'effect_ci_lower',
-                                          'effect_ci_upper', 'n_groups', 'n_total')},
-                    'significance': _sig_stars(r['p_value']),
-                })
         print(f'  {country}: done')
 
     # ---- GENeSYS-MOD -------------------------------------------------------
@@ -257,23 +237,6 @@ if __name__ == '__main__':
                    if (r := kruskal_wallis(df, dim)) is not None}
             pooled_rows.extend(_build_rows(key, res))
 
-            # Per year
-            for year in sorted(df['year'].unique()):
-                df_y = df[df['year'] == year]
-                if len(df_y) < 100:
-                    continue
-                for dim in TIME_DIMENSIONS:
-                    r = kruskal_wallis(df_y, dim)
-                    if r is None:
-                        continue
-                    yearly_rows.append({
-                        'source': 'GENeSYS-MOD', 'scenario': scenario,
-                        'country': country, 'year': int(year), 'dimension': dim,
-                        **{k: r[k] for k in ('test', 'statistic', 'p_value',
-                                              'effect_size', 'effect_ci_lower',
-                                              'effect_ci_upper', 'n_groups', 'n_total')},
-                        'significance': _sig_stars(r['p_value']),
-                    })
         print(f'  scenario {scenario}: done')
 
     # ---- Export ------------------------------------------------------------
@@ -283,9 +246,6 @@ if __name__ == '__main__':
     pd.DataFrame(pooled_rows).to_csv(pooled_path, index=False)
     print(f'\nExported {len(pooled_rows):,} rows  -> {pooled_path}')
 
-    yearly_path = os.path.join(OUTPUT_FOLDER, 'stage1_kw_yearly.csv')
-    pd.DataFrame(yearly_rows).to_csv(yearly_path, index=False)
-    print(f'Exported {len(yearly_rows):,} rows  -> {yearly_path}')
 
     # ---- Quick summary -----------------------------------------------------
     df_p = pd.DataFrame(pooled_rows)

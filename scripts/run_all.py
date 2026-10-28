@@ -35,25 +35,17 @@ REQUIRED_DATA = [
 
 STEPS = [
     # ── Stage 1 and Stage 2 statistics ───────────────────────────────────────
-    ("stage1_kruskal_wallis.py",                "Stage 1: Kruskal-Wallis tests (inputs to Table 6)"),
-    ("stage2_t_tests.py",                       "Stage 2: group t-tests (inputs to Tables 7, C.3; Figures 6, 7)"),
-    # ── Pearson correlations ─────────────────────────────────────────────────
-    ("compute_entsoe_cross_year_pearson.py",    "ENTSO-E cross-year Pearson (Table 8, C.4; Figures 8, 9, C.5-C.9)"),
-    ("compute_entsoe_cross_country_pearson.py", "ENTSO-E cross-country Pearson (Table 4; Figure C.1)"),
-    ("compute_genesys_cross_country_pearson.py","GENeSYS-MOD cross-country Pearson (Table 4)"),
-    ("compute_genesys_vs_entsoe_year_pearson.py","GENeSYS-MOD vs. ENTSO-E Pearson by year (Figures 9, C.6-C.9)"),
-    ("compute_extended_years_pearson.py",       "GENeSYS-MOD vs. ENTSO-E Pearson, model years 2018-2060 (Section 3.4.2 footnote)"),
-    ("stage3_pearson_correlations.py",          "Stage 3: profile correlations (Section 3.4.3; Figure C.10)"),
+    ("stage1_kruskal_wallis.py",                "Stage 1: Kruskal-Wallis tests"),
+    ("stage2_t_tests.py",                       "Stage 2: group t-tests"),
+    # ── Stage 3 correlations and benchmark ───────────────────────────────────
+    ("compute_benchmark_correlations.py",       "Cross-year and cross-country Pearson correlations"),
+    ("compute_model_market_correlations.py",    "GENeSYS-MOD vs. ENTSO-E Pearson correlations"),
+    ("stage3_pearson_correlations.py",          "Stage 3: profile correlations (Pearson and Spearman)"),
     # ── Compression factors and value factors ────────────────────────────────
-    ("compute_compression_factors.py",          "Compression factors xi (Tables 11, C.5, C.6)"),
+    ("compute_compression_factors.py",          "Compression factors xi"),
     ("compute_value_factors.py",                "Solar and wind value factors (Section 4.2)"),
-    # ── Tables and values quoted in the text ─────────────────────────────────
-    ("figure_1_france_patterns.py",             "Figure 1 coordinates"),
-    ("table_4_country_clusters.py",             "Table 4 and footnote"),
-    ("table_5_distribution_metrics.py",         "Table 5 and Section 3.1 values"),
-    ("tables_stage1_stage2.py",                 "Tables 6, 7, C.3"),
-    ("tables_benchmark.py",                     "Table 8 values, Table C.4, Sections 3.4.1-3.4.3"),
-    ("tables_spreads.py",                       "Tables 9, 11, C.5, C.6 and Section 4.2 spreads"),
+    # ── Tables and numbers quoted in the text ────────────────────────────────
+    ("tables.py",                               "All tables, Figure 1 data, and numbers quoted in the text"),
     # ── Figures (main text) ──────────────────────────────────────────────────
     ("plot_annual_mean_prices.py",              "Figure 4"),
     ("plot_price_duration_curves.py",           "Figure 5"),
