@@ -1,5 +1,5 @@
 """
-analysis_yearly_average.py
+figure_04_annual_prices.py — Figure 4: annual mean prices.
 
 Paper figure: Annual mean electricity prices.
   - ENTSO-E  : one box per year, distribution over countries (2018–2025)

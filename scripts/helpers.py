@@ -1,5 +1,5 @@
 """
-outputs.py — Helpers for saving tables and individual reported values.
+helpers.py — Helper functions for saving tables and the numbers quoted in the text.
 
 Every script that produces a number quoted in the paper records it with a
 ValueLog. The log is written to results/tables/values_<script>.csv with columns

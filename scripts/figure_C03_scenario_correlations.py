@@ -1,19 +1,14 @@
 ﻿"""
-plot_stage3_genesys_cross_year.py
+figure_C03_scenario_correlations.py — Figure C.3: cross-scenario correlations of GENeSYS-MOD price patterns.
 
-Cross-year GENeSYS-MOD Pearson ρ heatmap — companion to Fig 10.
+Cross-scenario GENeSYS-MOD Pearson rho heatmaps.
 
-For each scenario: a 2-panel figure with dual-triangle 3×3 heatmaps,
-matching the style of plot_stage3_entsoe_cross_year.py.
-  Left panel : upper triangle = Hour-of-Day, lower = Day-of-Week
-  Right panel: upper triangle = Month-of-Year, lower = Season
+For each temporal dimension: one 4x4 symmetric matrix where
+  rows/cols = scenarios (GoRES, NECPEssentials, REPowerEU++, Trinity)
+  value     = mean Pearson rho averaged over COUNTRIES x YEARS (2018, 2025, 2030)
+  diagonal  = 1 (same scenario)
 
-ρ for each cell = mean over COUNTRIES of Pearson ρ between the
-group-mean price profiles of year1 vs year2.
-Diagonal = 1 (same year).
-
-Output: results/figures/Figure_C4.pdf
-        (one file per scenario)
+Output: results/figures/Figure_C3.pdf
 """
 
 import warnings
@@ -52,6 +47,13 @@ DIM_LABELS = {
     "season" : "Season",
 }
 
+SCENARIO_LABELS = [
+    "GoRES",
+    "NECP",
+    "REPower++",
+    "Trinity",
+]
+
 PANELS = [
     ("hour",  "weekday", "Hour-of-Day (upper) / Day-of-Week (lower)"),
     ("month", "season",  "Month-of-Year (upper) / Season (lower)"),
@@ -82,46 +84,54 @@ def build_time_map(year: int) -> pd.DataFrame:
     return tm
 
 
-# ── Pearson ρ computation ──────────────────────────────────────────────────────
+# ── Profile computation ────────────────────────────────────────────────────────
 
-def compute_cross_year_matrix(df_raw: pd.DataFrame, scenario: str) -> dict:
+def build_profiles(df_raw: pd.DataFrame, available: list) -> dict:
     """
-    Returns {dimension: 3×3 matrix} for a given scenario.
-    Diagonal = 1.0; off-diagonal = mean Pearson ρ over COUNTRIES.
+    profiles[dim][scenario][year] = {country: group-mean array}
     """
-    available = [c for c in COUNTRIES if c in df_raw.columns]
-    n = len(YEARS)
-
-    # Pre-compute group-mean profiles: profiles[dim][year] = {country: array}
-    profiles: dict = {dim: {} for dim in DIM_LABELS}
+    profiles = {dim: {s: {} for s in SCENARIOS} for dim in DIM_LABELS}
 
     for year in YEARS:
         tm = build_time_map(year)
-        sub = df_raw[(df_raw["year"] == year) & (df_raw["scenario"] == scenario)].copy()
-        if sub.empty:
-            continue
-        sub = sub.merge(tm, on="Hour", how="left")
-        for dim in DIM_LABELS:
-            profiles[dim][year] = {
-                c: sub.groupby(dim)[c].mean().values
-                for c in available
-            }
+        for scenario in SCENARIOS:
+            sub = df_raw[
+                (df_raw["year"] == year) & (df_raw["scenario"] == scenario)
+            ].copy()
+            if sub.empty:
+                continue
+            sub = sub.merge(tm, on="Hour", how="left")
+            for dim in DIM_LABELS:
+                profiles[dim][scenario][year] = {
+                    c: sub.groupby(dim)[c].mean().values
+                    for c in available
+                }
 
-    matrices = {}
-    for dim in DIM_LABELS:
-        mat = np.full((n, n), np.nan)
-        # diagonal left as NaN -> rendered grey via cmap.set_bad
+    return profiles
 
-        for i, y1 in enumerate(YEARS):
-            for j, y2 in enumerate(YEARS):
-                if i == j:
+
+# ── Cross-scenario matrix ──────────────────────────────────────────────────────
+
+def compute_cross_scenario_matrix(profiles: dict, dim: str, available: list) -> np.ndarray:
+    """
+    4x4 symmetric matrix: mean Pearson rho between scenario pairs,
+    averaged over countries x years.
+    """
+    n = len(SCENARIOS)
+    mat = np.full((n, n), np.nan)
+    # diagonal left as NaN -> rendered grey via cmap.set_bad
+
+    for i, s1 in enumerate(SCENARIOS):
+        for j, s2 in enumerate(SCENARIOS):
+            if i == j:
+                continue
+            rhos = []
+            for year in YEARS:
+                if year not in profiles[dim][s1] or year not in profiles[dim][s2]:
                     continue
-                if y1 not in profiles[dim] or y2 not in profiles[dim]:
-                    continue
-                rhos = []
                 for c in available:
-                    v1 = profiles[dim][y1].get(c)
-                    v2 = profiles[dim][y2].get(c)
+                    v1 = profiles[dim][s1][year].get(c)
+                    v2 = profiles[dim][s2][year].get(c)
                     if v1 is None or v2 is None:
                         continue
                     if np.std(v1) < 1e-10 or np.std(v2) < 1e-10:
@@ -129,29 +139,28 @@ def compute_cross_year_matrix(df_raw: pd.DataFrame, scenario: str) -> dict:
                     rho, _ = pearsonr(v1, v2)
                     if not np.isnan(rho):
                         rhos.append(rho)
-                if rhos:
-                    mat[i, j] = float(np.mean(rhos))
+            if rhos:
+                mat[i, j] = float(np.mean(rhos))
 
-        matrices[dim] = mat
-
-    return matrices
+    return mat
 
 
 # ── Combined matrix (dual-triangle) ───────────────────────────────────────────
 
-def build_combined_matrix(matrices: dict, dim_upper: str, dim_lower: str) -> np.ndarray:
+def build_combined_matrix(profiles: dict, dim_upper: str, dim_lower: str,
+                          available: list) -> np.ndarray:
     """
-    3×3 combined matrix:
+    4×4 combined matrix:
       diagonal       : 1.0
       upper triangle : dim_upper
       lower triangle : dim_lower
     """
-    n = len(YEARS)
+    n = len(SCENARIOS)
     mat = np.full((n, n), np.nan)
     # diagonal left as NaN -> rendered grey via cmap.set_bad
 
     for dim, triangle in [(dim_upper, "upper"), (dim_lower, "lower")]:
-        src = matrices[dim]
+        src = compute_cross_scenario_matrix(profiles, dim, available)
         for i in range(n):
             for j in range(n):
                 if i == j:
@@ -167,36 +176,21 @@ def build_combined_matrix(matrices: dict, dim_upper: str, dim_lower: str) -> np.
     return mat
 
 
-# ── Pooled matrices (average over all scenarios) ──────────────────────────────
-
-def compute_pooled_matrices(df_raw: pd.DataFrame) -> dict:
-    """Average cross-year matrices over all scenarios."""
-    all_matrices = [compute_cross_year_matrix(df_raw, s) for s in SCENARIOS]
-    pooled = {}
-    for dim in DIM_LABELS:
-        stack = np.array([m[dim] for m in all_matrices])
-        pooled[dim] = np.nanmean(stack, axis=0)
-        # diagonal left as NaN -> rendered grey via cmap.set_bad
-    return pooled
-
-
 # ── Plot ───────────────────────────────────────────────────────────────────────
 
-def make_figure(scenario: str, matrices: dict):
-    n = len(YEARS)
+def make_figure(profiles: dict, available: list):
     cmap = plt.get_cmap("RdYlGn").copy()
     cmap.set_bad("lightgrey")
 
-    fig, axes = plt.subplots(1, 2, figsize=(6.67, 3))
-    fig.subplots_adjust(left=0.23, right=0.95, top=0.88, bottom=0.13,
-                        wspace=0.40)
-    if scenario != "pooled":
-        fig.suptitle(f"GENeSYS-MOD cross-year Pearson $\\rho$ — {scenario}",
-                     fontsize=9, fontweight="bold")
+    n = len(SCENARIOS)
+
+    fig, axes = plt.subplots(1, 2, figsize=(6.67, 3.5))
+    fig.subplots_adjust(left=0.23, right=0.95, top=0.88, bottom=0.15,
+                        wspace=0.65)
 
     im = None
     for ax, (dim_upper, dim_lower, _) in zip(axes, PANELS):
-        mat = build_combined_matrix(matrices, dim_upper, dim_lower)
+        mat = build_combined_matrix(profiles, dim_upper, dim_lower, available)
 
         im = ax.imshow(mat, vmin=-1, vmax=1, cmap=cmap, aspect="equal")
 
@@ -219,8 +213,8 @@ def make_figure(scenario: str, matrices: dict):
         is_right = ax is axes[1]
         ax.set_xticks(range(n))
         ax.set_yticks(range(n))
-        ax.set_xticklabels(YEARS, rotation=35, ha="right")
-        ax.set_yticklabels(YEARS)
+        ax.set_xticklabels(SCENARIO_LABELS, rotation=35, ha="right")
+        ax.set_yticklabels(SCENARIO_LABELS)
         ax.tick_params(top=True, bottom=True, left=True, right=True,
                        labeltop=True, labelbottom=True,
                        labelleft=not is_right, labelright=is_right,
@@ -239,10 +233,10 @@ def make_figure(scenario: str, matrices: dict):
     pos0 = axes[0].get_position()
     pos1 = axes[1].get_position()
     mid_x = (pos0.x1 + pos1.x0) / 2
-    for i, yr in enumerate(YEARS):
+    for i, lbl in enumerate(SCENARIO_LABELS):
         _, y_disp = axes[0].transData.transform((0, i))
         _, y_fig  = fig.transFigure.inverted().transform((0, y_disp))
-        fig.text(mid_x, y_fig, str(yr), ha="center", va="center", fontsize=9)
+        fig.text(mid_x, y_fig, lbl, ha="center", va="center", fontsize=9)
     pos = axes[0].get_position()
     cax = fig.add_axes([0.02, pos.y0, 0.015, pos.height])
     cbar = fig.colorbar(im, cax=cax)
@@ -252,8 +246,7 @@ def make_figure(scenario: str, matrices: dict):
     cbar.ax.yaxis.set_label_position("left")
     cbar.set_label(r"Pearson $\rho$")
 
-    out_path = OUT_DIR / ("Figure_C4.pdf" if scenario == "pooled"
-                          else f"stage3_genesys_cross_year_{scenario.replace('+','plus').replace(' ','_')}.pdf")
+    out_path = OUT_DIR / "Figure_C3.pdf"
     fig.savefig(out_path, dpi=300, bbox_inches="tight")
     plt.close(fig)
     print(f"Saved: {out_path}")
@@ -262,13 +255,18 @@ def make_figure(scenario: str, matrices: dict):
 # ── Main ───────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    print("Loading GENeSYS-MOD data …")
+    print("Loading GENeSYS-MOD data ...")
     df_raw = pd.read_csv(GENESYS_FILE)
     df_raw = df_raw[df_raw["year"].isin(YEARS)]
 
-    print("Computing pooled cross-year matrices (all scenarios) …")
-    pooled = compute_pooled_matrices(df_raw)
-    make_figure("pooled", pooled)
+    available = [c for c in COUNTRIES if c in df_raw.columns]
+    print(f"  {len(available)} countries available")
+
+    print("Computing group-mean profiles ...")
+    profiles = build_profiles(df_raw, available)
+
+    print("Generating figure ...")
+    make_figure(profiles, available)
 
     matplotlib.rcParams.update(matplotlib.rcParamsDefault)
-    print("\nDone.")
+    print("Done.")

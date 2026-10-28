@@ -1,5 +1,5 @@
 """
-Stage 3 scatter: Pearson r vs. Spearman ρ per temporal dimension.
+figure_C10_pearson_vs_spearman.py — Figure C.10: Pearson vs. Spearman correlations.
 
 Layout  : 2 × 2 subplots (one per dimension)
 X-axis  : Pearson r

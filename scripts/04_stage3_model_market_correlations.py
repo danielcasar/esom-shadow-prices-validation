@@ -1,5 +1,5 @@
 """
-compute_model_market_correlations.py — Pearson correlations between
+04_stage3_model_market_correlations.py — Stage 3: Pearson correlations between GENeSYS-MOD and ENTSO-E profiles.
 GENeSYS-MOD and ENTSO-E group-mean price profiles.
 
 For each country × scenario × dimension × GENeSYS-MOD year × ENTSO-E year,

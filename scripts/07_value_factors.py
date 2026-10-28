@@ -1,5 +1,5 @@
 """
-compute_value_factors.py — solar and wind value factors quoted in Section 4.2.
+07_value_factors.py — Solar and wind value factors (Section 4.2).
 
 Value factor = generation-weighted capture price / time-weighted average price,
 computed per country for 2025 and reported as the median across countries.
@@ -22,7 +22,7 @@ data/GENeSYS_MOD_prices.csv,      data/GENeSYS_MOD_vre_production_2025.csv
 Outputs
 -------
 results/intermediate/value_factors_2025.csv
-results/tables/values_compute_value_factors.csv
+results/tables/values_value_factors.csv
 """
 
 import numpy as np
@@ -30,7 +30,7 @@ import pandas as pd
 
 from config import (COUNTRIES, DATA_DIR, ENTSOE_PRICES_FILE, GENESYS_PRICES_FILE,
                     RESULTS_DIR)
-from outputs import ValueLog
+from helpers import ValueLog
 
 YEAR = 2025
 SCENARIO = "GoRES"
@@ -46,7 +46,7 @@ def value_factor(prices: pd.Series, generation: pd.Series, average_price: float)
 
 
 def main():
-    log = ValueLog("compute_value_factors")
+    log = ValueLog("value_factors")
 
     entsoe = pd.read_csv(ENTSOE_PRICES_FILE, index_col=0, parse_dates=True)
     entsoe = entsoe[entsoe.index.year == YEAR]

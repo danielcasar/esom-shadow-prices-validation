@@ -1,9 +1,9 @@
 """
-run_all.py  —  Full replication pipeline
+run_all.py — Runs the full replication.
 
-Executes every analysis script in order and reproduces all tables, figures,
-and numbers reported in the paper from the input data in data/. Run from any
-directory:
+Executes the numbered analysis scripts (01-08) in order, then the figure
+scripts, and reproduces all tables, figures, and numbers reported in the paper
+from the input data in data/. Run from any directory:
 
     python scripts/run_all.py
 
@@ -33,41 +33,35 @@ REQUIRED_DATA = [
     "GENeSYS_MOD_vre_production_2025.csv",
 ]
 
+# Analysis steps (numbered in run order), then one script per figure
 STEPS = [
-    # ── Stage 1 and Stage 2 statistics ───────────────────────────────────────
-    ("stage1_kruskal_wallis.py",                "Stage 1: Kruskal-Wallis tests"),
-    ("stage2_t_tests.py",                       "Stage 2: group t-tests"),
-    # ── Stage 3 correlations and benchmark ───────────────────────────────────
-    ("compute_benchmark_correlations.py",       "Cross-year and cross-country Pearson correlations"),
-    ("compute_model_market_correlations.py",    "GENeSYS-MOD vs. ENTSO-E Pearson correlations"),
-    ("stage3_pearson_correlations.py",          "Stage 3: profile correlations (Pearson and Spearman)"),
-    # ── Compression factors and value factors ────────────────────────────────
-    ("compute_compression_factors.py",          "Compression factors xi"),
-    ("compute_value_factors.py",                "Solar and wind value factors (Section 4.2)"),
-    # ── Tables and numbers quoted in the text ────────────────────────────────
-    ("tables.py",                               "All tables, Figure 1 data, and numbers quoted in the text"),
-    # ── Figures (main text) ──────────────────────────────────────────────────
-    ("plot_annual_mean_prices.py",              "Figure 4"),
-    ("plot_price_duration_curves.py",           "Figure 5"),
-    ("plot_dimension_profiles.py",              "Figure 6"),
-    ("plot_compression_factors.py",             "Figure 7"),
-    ("plot_pearson_stability_decay.py",         "Figure 8"),
-    ("plot_pearson_alignment_heatmap.py",       "Figure 9"),
-    # ── Figures (Appendix C) ─────────────────────────────────────────────────
-    ("plot_country_clusters.py",                "Figure C.1"),
-    ("plot_price_distribution.py",              "Figure C.2"),
-    ("plot_genesys_cross_scenario_heatmap.py",  "Figure C.3"),
-    ("plot_genesys_cross_year_heatmap.py",      "Figure C.4"),
-    ("plot_entsoe_cross_year_heatmap.py",       "Figure C.5"),
-    ("plot_pearson_benchmark.py",               "Figures C.6-C.9"),
-    ("plot_pearson_vs_spearman.py",             "Figure C.10"),
+    "01_stage1_kruskal_wallis.py",
+    "02_stage2_t_tests.py",
+    "03_stage3_benchmark_correlations.py",
+    "04_stage3_model_market_correlations.py",
+    "05_stage3_pearson_vs_spearman.py",
+    "06_compression_factors.py",
+    "07_value_factors.py",
+    "08_tables.py",
+    "figure_04_annual_prices.py",
+    "figure_05_price_duration_curves.py",
+    "figure_06_temporal_profiles.py",
+    "figure_07_compression.py",
+    "figure_08_benchmark_stability.py",
+    "figure_09_alignment_heatmap.py",
+    "figure_C01_country_clusters.py",
+    "figure_C02_price_distribution.py",
+    "figure_C03_scenario_correlations.py",
+    "figure_C04_model_year_correlations.py",
+    "figure_C05_market_year_correlations.py",
+    "figure_C06-C09_alignment_by_dimension.py",
+    "figure_C10_pearson_vs_spearman.py",
 ]
 
 
-def run(script: str, description: str, i: int, n: int) -> None:
+def run(script: str, i: int, n: int) -> None:
     print(f"\n{'=' * 70}")
-    print(f"  [{i}/{n}] {description}")
-    print(f"  {script}")
+    print(f"  [{i}/{n}] {script}")
     print(f"{'=' * 70}", flush=True)
     t0 = time.time()
     result = subprocess.run([PYTHON, str(SCRIPTS_DIR / script)], check=False,
@@ -88,8 +82,8 @@ def main():
         sys.exit(1)
 
     t0 = time.time()
-    for i, (script, description) in enumerate(STEPS, start=1):
-        run(script, description, i, len(STEPS))
+    for i, script in enumerate(STEPS, start=1):
+        run(script, i, len(STEPS))
 
     print(f"\n{'=' * 70}")
     print(f"  All steps completed in {(time.time() - t0) / 60:.1f} min.")

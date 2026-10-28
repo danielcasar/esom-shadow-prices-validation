@@ -1,5 +1,5 @@
 """
-plot_pearson_stability_decay.py
+figure_08_benchmark_stability.py — Figure 8: cross-year stability of ENTSO-E price patterns.
 
 Plots mean ENTSO-E cross-year Pearson rho (averaged across all countries)
 as a function of temporal distance (lag in years), separately for each

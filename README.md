@@ -23,14 +23,13 @@ day of week, month of year, season). The analysis has three stages, which the
 scripts follow:
 
 1. **Pattern existence:** Kruskal–Wallis tests per country, scenario, and
-   resolution (`stage1_kruskal_wallis.py`).
+   resolution (script 01).
 2. **Pattern magnitude:** one-sample t-tests of each calendar group against
    the annual mean, giving the group-mean deviation profiles and the
-   compression factors (`stage2_t_tests.py`, `compute_compression_factors.py`).
+   compression factors (scripts 02 and 06).
 3. **Pattern alignment:** Pearson correlations between model and market
    profiles, benchmarked against the correlation between observed market
-   years (`compute_benchmark_correlations.py`,
-   `compute_model_market_correlations.py`, `stage3_pearson_correlations.py`).
+   years (scripts 03–05).
 
 The methods are described in Section 2 of the paper.
 
@@ -50,11 +49,20 @@ python scripts/run_all.py
 ## Repository structure
 
 ```
-data/                 Input data (all included; see data/README.md)
-scripts/              All analysis, table, and figure scripts
-├── config.py         Countries, years, scenarios, clusters, paths
-├── run_all.py        Single entry point for the full replication
-└── ...
+data/                                       Input data (all included; see data/README.md)
+scripts/
+├── run_all.py                              Runs all scripts below in order
+├── config.py                               Settings: countries, years, scenarios, clusters, paths
+├── helpers.py                              Helper functions for saving tables and numbers
+├── 01_stage1_kruskal_wallis.py             Stage 1: Kruskal–Wallis tests
+├── 02_stage2_t_tests.py                    Stage 2: t-tests per calendar group
+├── 03_stage3_benchmark_correlations.py     Stage 3: correlations between years and countries
+├── 04_stage3_model_market_correlations.py  Stage 3: correlations between model and market
+├── 05_stage3_pearson_vs_spearman.py        Stage 3: robustness check
+├── 06_compression_factors.py               Compression factors
+├── 07_value_factors.py                     Value factors (Section 4.2)
+├── 08_tables.py                            All tables and the numbers quoted in the text
+└── figure_<number>_<topic>.py              One script per figure, e.g. figure_C03_scenario_correlations.py
 ```
 
 Running `run_all.py` creates `results/` with three subfolders:
@@ -85,35 +93,19 @@ Transparency Platform terms of use.
 
 All outputs are named by their number in the paper.
 
-**Tables.** `tables.py` produces all computed tables from the intermediate
-results and writes them to `results/tables/Table_<number>.csv` (e.g.
-`Table_C5.csv`). It also writes every number quoted in the text, each labelled
-with its location in the paper, to `results/tables/values_tables.csv`; the
-value factors (Section 4.2) come from `compute_value_factors.py`. Tables 1–3,
-10, C.1, and C.2 are descriptive and involve no computation; the literature
-ranges in Table 9 are taken from the cited studies.
+- **Tables:** `08_tables.py` writes every computed table to
+  `results/tables/Table_<number>.csv` (e.g. `Table_C5.csv`), and every number
+  quoted in the text, labelled with its location in the paper, to
+  `results/tables/values_tables.csv`. The value factors (Section 4.2) come
+  from `07_value_factors.py`.
+- **Figures:** each script `figure_<number>_<topic>.py` writes
+  `results/figures/Figure_<number>.pdf`. Figure 1 is drawn in the manuscript
+  from the coordinates in `results/figures/Figure_1_data.csv` (written by
+  `08_tables.py`).
 
-**Figures.** Each figure has its own script, which writes
-`results/figures/Figure_<number>.pdf`:
-
-| Figure | Script |
-|--------|--------|
-| 1 | `tables.py` (coordinates in `Figure_1_data.csv`; the figure is drawn in the manuscript) |
-| 4 | `plot_annual_mean_prices.py` |
-| 5 | `plot_price_duration_curves.py` |
-| 6 | `plot_dimension_profiles.py` |
-| 7 | `plot_compression_factors.py` |
-| 8 | `plot_pearson_stability_decay.py` |
-| 9 | `plot_pearson_alignment_heatmap.py` |
-| C.1 | `plot_country_clusters.py` |
-| C.2 | `plot_price_distribution.py` |
-| C.3 | `plot_genesys_cross_scenario_heatmap.py` |
-| C.4 | `plot_genesys_cross_year_heatmap.py` |
-| C.5 | `plot_entsoe_cross_year_heatmap.py` |
-| C.6–C.9 | `plot_pearson_benchmark.py` |
-| C.10 | `plot_pearson_vs_spearman.py` |
-
-Figures 2 and 3 are conceptual diagrams.
+Tables 1–3, 10, C.1, and C.2 and Figures 2 and 3 are descriptive or
+conceptual and involve no computation; the literature ranges in Table 9 are
+taken from the cited studies.
 
 ---
 

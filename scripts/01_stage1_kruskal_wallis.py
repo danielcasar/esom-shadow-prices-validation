@@ -1,5 +1,5 @@
 ﻿"""
-Stage 1: Kruskal-Wallis H-test for calendar effects.
+01_stage1_kruskal_wallis.py — Stage 1: Kruskal-Wallis tests for calendar effects (input to Table 6).
 
 For each combination of (source, country [, scenario]):
   - test H0: all temporal groups share the same central tendency
