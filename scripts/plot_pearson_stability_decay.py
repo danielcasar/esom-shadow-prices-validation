@@ -5,7 +5,7 @@ Plots mean ENTSO-E cross-year Pearson rho (averaged across all countries)
 as a function of temporal distance (lag in years), separately for each
 of the four temporal dimensions.
 
-Output: results/plots/pearson_stability_decay.png
+Output: results/figures/Figure_8.pdf
 """
 
 import pandas as pd
@@ -26,10 +26,10 @@ matplotlib.rcParams.update({
     "figure.titlesize": 9,
 })
 
-BASE = str(Path(__file__).parent.parent.parent)
+BASE = str(Path(__file__).parent.parent)
 
-INPUT  = os.path.join(BASE, "results", "calendar_effects", "entsoe_cross_year_pearson.csv")
-OUTPUT = os.path.join(BASE, "paper", "plots", "Figure_8.pdf")
+INPUT  = os.path.join(BASE, "results", "intermediate", "entsoe_cross_year_pearson.csv")
+OUTPUT = os.path.join(BASE, "results", "figures", "Figure_8.pdf")
 
 # ── Load and aggregate ────────────────────────────────────────────────────────
 

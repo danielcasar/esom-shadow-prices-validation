@@ -7,8 +7,8 @@ Y-axis  : Spearman ρ
 Each dot: one (country × scenario) observation, coloured by scenario
 Diagonal: y = x reference line (perfect agreement between the two metrics)
 
-Input  : results/calendar_effects/stage3_pearson_correlations.csv
-Output : results/calendar_effects/stage3_pearson_vs_spearman.png
+Input  : results/intermediate/stage3_pearson_correlations.csv
+Output : results/figures/Figure_C10.pdf
 """
 
 import os
@@ -32,10 +32,10 @@ matplotlib.rcParams.update({
 })
 
 # ---------------------------------------------------------------------------
-BASE   = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-INPUT  = os.path.join(BASE, 'results', 'calendar_effects',
+BASE   = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+INPUT  = os.path.join(BASE, 'results', 'intermediate',
                       'stage3_pearson_correlations.csv')
-OUTPUT = os.path.join(BASE, 'paper', 'plots', 'Figure_A9.pdf')
+OUTPUT = os.path.join(BASE, 'results', 'figures', 'Figure_C10.pdf')
 
 # ---------------------------------------------------------------------------
 DIM_ORDER  = ['hour', 'weekday', 'month', 'season']

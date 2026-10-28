@@ -18,11 +18,11 @@ Benchmark design (matches main analysis):
   Season        all years: all ENTSO-E pairs, excl. crisis year 2022
 
 Inputs:
-  results/calendar_effects/genesys_vs_entsoe_year_pearson.csv
-  results/calendar_effects/entsoe_cross_year_pearson.csv
+  results/intermediate/genesys_vs_entsoe_year_pearson.csv
+  results/intermediate/entsoe_cross_year_pearson.csv
 
 Output:
-  paper/plots/pearson_heatmap_distance.png
+  results/figures/Figure_9.pdf
 """
 
 import numpy as np
@@ -34,10 +34,10 @@ from pathlib import Path
 
 RNG = np.random.default_rng(42)
 
-BASE       = Path(__file__).parent.parent.parent
-YEAR_FILE  = BASE / "results" / "calendar_effects" / "genesys_vs_entsoe_year_pearson.csv"
-CROSS_FILE = BASE / "results" / "calendar_effects" / "entsoe_cross_year_pearson.csv"
-OUT        = BASE / "paper" / "plots" / "Figure_9.pdf"
+BASE       = Path(__file__).parent.parent
+YEAR_FILE  = BASE / "results" / "intermediate" / "genesys_vs_entsoe_year_pearson.csv"
+CROSS_FILE = BASE / "results" / "intermediate" / "entsoe_cross_year_pearson.csv"
+OUT        = BASE / "results" / "figures" / "Figure_9.pdf"
 OUT.parent.mkdir(parents=True, exist_ok=True)
 
 CRISIS = {2021, 2022}

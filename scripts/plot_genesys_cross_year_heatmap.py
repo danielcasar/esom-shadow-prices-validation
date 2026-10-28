@@ -12,7 +12,7 @@ matching the style of plot_stage3_entsoe_cross_year.py.
 group-mean price profiles of year1 vs year2.
 Diagonal = 1 (same year).
 
-Output: paper/plots/stage3_genesys_cross_year_heatmap_{scenario}.png
+Output: results/figures/Figure_C4.pdf
         (one file per scenario)
 """
 
@@ -31,9 +31,9 @@ sys.path.insert(0, str(Path(__file__).parent))
 from config import COUNTRIES, GENESYS_YEARS, SCENARIOS
 
 # ── Paths ──────────────────────────────────────────────────────────────────────
-BASE         = Path(__file__).parent.parent.parent
+BASE         = Path(__file__).parent.parent
 GENESYS_FILE = BASE / "data" / "GENeSYS_MOD_prices.csv"
-OUT_DIR      = BASE / "paper" / "plots"
+OUT_DIR      = BASE / "results" / "figures"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 YEARS = GENESYS_YEARS   # [2018, 2025, 2030]
@@ -252,7 +252,7 @@ def make_figure(scenario: str, matrices: dict):
     cbar.ax.yaxis.set_label_position("left")
     cbar.set_label(r"Pearson $\rho$")
 
-    out_path = OUT_DIR / ("Figure_A3.pdf" if scenario == "pooled"
+    out_path = OUT_DIR / ("Figure_C4.pdf" if scenario == "pooled"
                           else f"stage3_genesys_cross_year_{scenario.replace('+','plus').replace(' ','_')}.pdf")
     fig.savefig(out_path, dpi=300, bbox_inches="tight")
     plt.close(fig)

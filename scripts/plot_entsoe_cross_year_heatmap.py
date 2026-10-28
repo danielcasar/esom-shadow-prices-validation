@@ -8,8 +8,8 @@ Two combined 8×8 subplots, each showing two temporal dimensions:
 Diagonal = 1 (same year).  A thin diagonal line separates the two dimensions
 within each subplot, and dimension labels are placed in each triangle.
 
-Input : results/calendar_effects/entsoe_cross_year_pearson.csv
-Output: paper/plots/Figure_A4.png
+Input : results/intermediate/entsoe_cross_year_pearson.csv
+Output: results/figures/Figure_C5.pdf
 """
 
 import numpy as np
@@ -28,11 +28,11 @@ matplotlib.rcParams.update({
     "axes.linewidth":  0.8,
 })
 
-BASE    = Path(__file__).parent.parent.parent
-INPUT   = BASE / "results" / "calendar_effects" / "entsoe_cross_year_pearson.csv"
-OUT_DIR = BASE / "paper" / "plots"
+BASE    = Path(__file__).parent.parent
+INPUT   = BASE / "results" / "intermediate" / "entsoe_cross_year_pearson.csv"
+OUT_DIR = BASE / "results" / "figures"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
-OUTPUT  = OUT_DIR / "Figure_A4.pdf"
+OUTPUT  = OUT_DIR / "Figure_C5.pdf"
 
 DIM_LABELS = {
     'hour'   : 'Hour-of-Day',

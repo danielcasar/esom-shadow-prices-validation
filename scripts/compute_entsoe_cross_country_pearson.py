@@ -9,7 +9,7 @@ group means (e.g. 24 hourly means for dimension='hour').
 
 Output
 ------
-results/calendar_effects/entsoe_cross_country_pearson.csv
+results/intermediate/entsoe_cross_country_pearson.csv
 
 Columns: dimension, year, country1, country2, rho, p_value, n_groups
 """
@@ -28,9 +28,9 @@ from config import COUNTRIES, ENTSOE_YEARS
 # ---------------------------------------------------------------------------
 # Paths
 # ---------------------------------------------------------------------------
-BASE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ENTSOE_FILE = os.path.join(BASE, 'data', 'ENTSOE_day_ahead_prices.csv')
-OUTPUT_FILE = os.path.join(BASE, 'results', 'calendar_effects',
+OUTPUT_FILE = os.path.join(BASE, 'results', 'intermediate',
                            'entsoe_cross_country_pearson.csv')
 
 TIME_DIMENSIONS = ['hour', 'weekday', 'month', 'season']

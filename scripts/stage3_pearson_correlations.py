@@ -10,8 +10,8 @@ For each (country, scenario, dimension):
 A "profile" is the vector of group-mean prices for one temporal dimension
 (e.g. 24 hourly means, 12 monthly means, …).
 
-Input  : results/calendar_effects/stage2_ttest_groups_detail.csv
-Output : results/calendar_effects/stage3_pearson_correlations.csv
+Input  : results/intermediate/stage2_ttest_groups_detail.csv
+Output : results/intermediate/stage3_pearson_correlations.csv
 """
 
 import os
@@ -25,10 +25,10 @@ from scipy.stats import pearsonr, spearmanr
 # ---------------------------------------------------------------------------
 # Paths
 # ---------------------------------------------------------------------------
-BASE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-INPUT_FILE  = os.path.join(BASE, 'results', 'calendar_effects',
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+INPUT_FILE  = os.path.join(BASE, 'results', 'intermediate',
                            'stage2_ttest_groups_detail.csv')
-OUTPUT_FILE = os.path.join(BASE, 'results', 'calendar_effects',
+OUTPUT_FILE = os.path.join(BASE, 'results', 'intermediate',
                            'stage3_pearson_correlations.csv')
 
 TIME_DIMENSIONS = ['hour', 'weekday', 'month', 'season']
@@ -137,7 +137,7 @@ if __name__ == '__main__':
     #   Dimension     : hour only
     # =========================================================================
     YEAR_OUTPUT_FILE = os.path.join(
-        BASE, 'results', 'calendar_effects',
+        BASE, 'results', 'intermediate',
         'stage3_pearson_hour_year_specific.csv'
     )
 

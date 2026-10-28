@@ -17,7 +17,7 @@ GENeSYS: 4 scenarios × 8760 hours; range = median across 4 scenarios
 
 Output
 ------
-  results/calendar_effects/compression_factors_2025.csv
+  results/intermediate/compression_factors_2025.csv
   Console: LaTeX table rows for copy-paste into main.tex
 """
 
@@ -29,10 +29,10 @@ sys.path.insert(0, str(Path(__file__).parent))
 from config import COUNTRIES, SCENARIOS
 
 # ── Paths ─────────────────────────────────────────────────────────────────────
-BASE       = Path(__file__).parent.parent.parent
+BASE       = Path(__file__).parent.parent
 ENTSOE_F   = BASE / "data" / "ENTSOE_day_ahead_prices.csv"
 GENESYS_F  = BASE / "data" / "GENeSYS_MOD_prices.csv"
-OUT_DIR    = BASE / "results" / "calendar_effects"
+OUT_DIR    = BASE / "results" / "intermediate"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 OUT_CSV    = OUT_DIR / "compression_factors_2025.csv"
 

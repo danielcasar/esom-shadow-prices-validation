@@ -11,10 +11,11 @@ For each combination of (source, country, year [, scenario]):
   - p-values are unadjusted; significance threshold α = 0.05
 
 Outputs:
-  results/calendar_effects/stage2_ttest_groups_detail.csv
+  results/intermediate/stage2_ttest_groups_detail.csv
 """
 
 import os
+from functools import lru_cache
 import pandas as pd
 import numpy as np
 from scipy.stats import ttest_1samp
@@ -27,10 +28,10 @@ from config import COUNTRIES, SCENARIOS, ENTSOE_YEARS, GENESYS_YEARS
 # ---------------------------------------------------------------------------
 # Paths
 # ---------------------------------------------------------------------------
-BASE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ENTSOE_FILE   = os.path.join(BASE, 'data', 'ENTSOE_day_ahead_prices.csv')
 GENESYS_FILE  = os.path.join(BASE, 'data', 'GENeSYS_MOD_prices.csv')
-OUTPUT_FOLDER = os.path.join(BASE, 'results', 'calendar_effects')
+OUTPUT_FOLDER = os.path.join(BASE, 'results', 'intermediate')
 OUTPUT_FILE   = os.path.join(OUTPUT_FOLDER, 'stage2_ttest_groups_detail.csv')
 
 # ---------------------------------------------------------------------------
@@ -52,6 +53,18 @@ MONTH_TO_SEASON = {
 # Data loading helpers
 # ---------------------------------------------------------------------------
 
+@lru_cache(maxsize=None)
+def _read_entsoe() -> pd.DataFrame:
+    """Read the ENTSO-E CSV once per run (cached)."""
+    return pd.read_csv(ENTSOE_FILE, index_col=0, parse_dates=True)
+
+
+@lru_cache(maxsize=None)
+def _read_genesys() -> pd.DataFrame:
+    """Read the GENeSYS-MOD CSV once per run (cached)."""
+    return pd.read_csv(GENESYS_FILE)
+
+
 def _add_time_dims(df: pd.DataFrame) -> pd.DataFrame:
     """Attach hour / weekday / month / season / year columns."""
     df = df.copy()
@@ -68,7 +81,7 @@ def _add_time_dims(df: pd.DataFrame) -> pd.DataFrame:
 
 def load_entsoe(country: str, year: int) -> pd.DataFrame | None:
     """Load one country × year slice from the ENTSO-E CSV."""
-    df = pd.read_csv(ENTSOE_FILE, index_col=0, parse_dates=True)
+    df = _read_entsoe()
     if country not in df.columns:
         return None
     series = (df[[country]]
@@ -82,7 +95,7 @@ def load_entsoe(country: str, year: int) -> pd.DataFrame | None:
 
 def load_genesys(country: str, scenario: str, year: int) -> pd.DataFrame | None:
     """Load one country × scenario × year slice from the GENeSYS-MOD CSV."""
-    df = pd.read_csv(GENESYS_FILE)
+    df = _read_genesys()
     if country not in df.columns:
         return None
     df = (df[(df['scenario'] == scenario) & (df['year'] == year)]

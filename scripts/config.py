@@ -1,9 +1,21 @@
 """
 config.py — Central parameter file for all analysis scripts.
 
-Countries, years, scenarios, and regions are defined here.
+Countries, years, scenarios, regions, and repository paths are defined here.
 All scripts import their configuration from this file.
 """
+
+from pathlib import Path
+
+# ── Repository paths ──────────────────────────────────────────────────────────
+BASE        = Path(__file__).resolve().parent.parent
+DATA_DIR    = BASE / "data"
+RESULTS_DIR = BASE / "results" / "intermediate"   # intermediate results
+PLOTS_DIR   = BASE / "results" / "figures"        # figures (paper numbering)
+TABLES_DIR  = BASE / "results" / "tables"         # tables and in-text values
+
+ENTSOE_PRICES_FILE  = DATA_DIR / "ENTSOE_day_ahead_prices.csv"
+GENESYS_PRICES_FILE = DATA_DIR / "GENeSYS_MOD_prices.csv"
 
 # ── Countries ─────────────────────────────────────────────────────────────────
 # 22 European countries
@@ -25,16 +37,8 @@ ANALYSIS_YEARS = sorted(set(ENTSOE_YEARS) | set(GENESYS_YEARS))
 # ── Scenarios ─────────────────────────────────────────────────────────────────
 SCENARIOS = ["GoRES", "NECPEssentials", "REPowerEU++", "Trinity"]
 
-# ── Geographic regions (CCR-based; see Table 2 in the paper) ─────────────────
-REGIONS = {
-    "Core":              ["AT", "BE", "CZ", "DE", "HR", "HU", "NL", "SI", "SK"],
-    "South-West Europe": ["ES", "FR", "PT"],
-    "Baltic":            ["EE", "FI", "LT", "LV", "PL"],
-    "South-East Europe": ["BG", "GR", "RO"],
-    "Unassigned":        ["CH", "IE"],
-}
-
-# ── Country clusters for Pearson benchmark figures (Figures A6–A9) ─────────────
+# ── Country clusters (Table 4, Figure C.1; used in Figures 7, 9, C.6–C.9 and
+#    Table C.6) ─────────────────────────────────────────────────────────────────
 CLUSTERS = {
     "Iberian":    ["ES", "PT"],
     "Baltic":     ["EE", "LT", "LV"],

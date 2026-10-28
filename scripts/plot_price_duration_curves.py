@@ -6,7 +6,7 @@ Paper figure: Price duration curves — ENTSO-E vs. GENeSYS-MOD.
   - ENTSO-E series:  country × year  (20 countries × 8 years)
   - GENeSYS series:  country × scenario × year  (20 × 4 × 3)
 
-Output: Code/paper/plots/price_duration_curve_comparison.png
+Output: results/figures/Figure_5.pdf
 """
 
 import warnings
@@ -24,10 +24,10 @@ sys.path.insert(0, str(Path(__file__).parent))
 from config import COUNTRIES, SCENARIOS, ENTSOE_YEARS, GENESYS_YEARS
 
 # ── Paths ──────────────────────────────────────────────────────────────────────
-BASE         = Path(__file__).parent.parent.parent
+BASE         = Path(__file__).parent.parent
 ENTSOE_FILE  = BASE / "data" / "ENTSOE_day_ahead_prices.csv"
 GENESYS_FILE = BASE / "data" / "GENeSYS_MOD_prices.csv"
-OUT_DIR      = BASE / "paper" / "plots"
+OUT_DIR      = BASE / "results" / "figures"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # ── Constants ─────────────────────────────────────────────────────────────────

@@ -6,9 +6,9 @@ For each (country, scenario, dimension, genesys_year, entsoe_year):
   - ENTSO-E profile = group-mean prices for that specific year
   - Pearson r between the two k-element profile vectors
 
-Input : results/calendar_effects/stage2_ttest_groups_detail.csv
-Output: results/calendar_effects/genesys_vs_entsoe_year_pearson.csv
-        results/calendar_effects/genesys_vs_entsoe_matched_year_pearson.csv
+Input : results/intermediate/stage2_ttest_groups_detail.csv
+Output: results/intermediate/genesys_vs_entsoe_year_pearson.csv
+        results/intermediate/genesys_vs_entsoe_matched_year_pearson.csv
            (year-matched subset: genesys_year == entsoe_year, i.e. 2018 & 2025)
 
 Columns: country, scenario, dimension, genesys_year, entsoe_year,
@@ -26,12 +26,12 @@ sys.path.insert(0, str(Path(__file__).parent))
 from config import COUNTRIES, SCENARIOS, GENESYS_YEARS
 
 # ---------------------------------------------------------------------------
-BASE       = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-INPUT      = os.path.join(BASE, 'results', 'calendar_effects',
+BASE       = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+INPUT      = os.path.join(BASE, 'results', 'intermediate',
                           'stage2_ttest_groups_detail.csv')
-OUTPUT        = os.path.join(BASE, 'results', 'calendar_effects',
+OUTPUT        = os.path.join(BASE, 'results', 'intermediate',
                              'genesys_vs_entsoe_year_pearson.csv')
-OUTPUT_MATCHED = os.path.join(BASE, 'results', 'calendar_effects',
+OUTPUT_MATCHED = os.path.join(BASE, 'results', 'intermediate',
                               'genesys_vs_entsoe_matched_year_pearson.csv')
 
 TIME_DIMS      = ['hour', 'weekday', 'month', 'season']

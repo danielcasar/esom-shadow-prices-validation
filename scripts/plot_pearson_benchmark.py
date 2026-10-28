@@ -8,15 +8,15 @@ per year). Shaded bar = 95 % bootstrap CI of the cluster-median
 ENTSO-E cross-year rho.
 
 Inputs:
-  results/calendar_effects/genesys_vs_entsoe_year_pearson.csv
-  results/calendar_effects/entsoe_cross_year_pearson.csv
+  results/intermediate/genesys_vs_entsoe_year_pearson.csv
+  results/intermediate/entsoe_cross_year_pearson.csv
 
-Outputs (paper/plots/):
-  Figure_A5.png  Hour-of-Day  (left bar = 2018+2025 vs. ENTSO-E year-matched;
+Outputs (results/figures/):
+  Figure_C6.pdf  Hour-of-Day  (left bar = 2018+2025 vs. ENTSO-E year-matched;
                                right bar = 2030 vs. non-crisis ENTSO-E)
-  Figure_A6.png  Day-of-Week
-  Figure_A7.png  Month-of-Year
-  Figure_A8.png  Season
+  Figure_C7.pdf  Day-of-Week
+  Figure_C8.pdf  Month-of-Year
+  Figure_C9.pdf  Season
 """
 
 import numpy as np
@@ -39,10 +39,10 @@ matplotlib.rcParams.update({
     "axes.linewidth":  0.8,
 })
 
-BASE       = Path(__file__).parent.parent.parent
-YEAR_FILE  = BASE / "results" / "calendar_effects" / "genesys_vs_entsoe_year_pearson.csv"
-CROSS_FILE = BASE / "results" / "calendar_effects" / "entsoe_cross_year_pearson.csv"
-OUT_DIR    = BASE / "paper" / "plots"
+BASE       = Path(__file__).parent.parent
+YEAR_FILE  = BASE / "results" / "intermediate" / "genesys_vs_entsoe_year_pearson.csv"
+CROSS_FILE = BASE / "results" / "intermediate" / "entsoe_cross_year_pearson.csv"
+OUT_DIR    = BASE / "results" / "figures"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 RNG    = np.random.default_rng(42)
@@ -221,7 +221,7 @@ def save_figure(filename, draw_fn, active_years):
     print(f"Saved: {out}")
 
 
-# Figure A5 — Hour-of-Day merged (year-matched + 2030)
+# Figure C.6 — Hour-of-Day merged (year-matched + 2030)
 hod_2018 = get_dots("hour", [2018], e_year_filter=[2018])
 hod_2025 = get_dots("hour", [2025], e_year_filter=[2025])
 hod_2030 = get_dots("hour", [2030], e_year_filter=nocrisis_entsoe)
@@ -229,35 +229,35 @@ bm_hour_a = get_bm_vals("hour", lag=1)   # adjacent-year pairs
 bm_hour_b = get_bm_vals("hour", lag=5)   # ~5-year lag pairs
 
 save_figure(
-    "Figure_A5.pdf",
+    "Figure_C6.pdf",
     lambda ax: draw_hod_merged(ax, bm_hour_a, bm_hour_b,
                                hod_2018, hod_2025, hod_2030),
     [2018, 2025, 2030],
 )
 
-# Figure A6 — Day-of-Week
+# Figure C.7 — Day-of-Week
 dow_dots = get_dots("weekday", [2018, 2025, 2030])
 bm_dow   = get_bm_vals("weekday")
 save_figure(
-    "Figure_A6.pdf",
+    "Figure_C7.pdf",
     lambda ax: draw_simple(ax, bm_dow, dow_dots, [2018, 2025, 2030]),
     [2018, 2025, 2030],
 )
 
-# Figure A7 — Month-of-Year
+# Figure C.8 — Month-of-Year
 month_dots = get_dots("month", [2018, 2025, 2030])
 bm_month   = get_bm_vals("month")
 save_figure(
-    "Figure_A7.pdf",
+    "Figure_C8.pdf",
     lambda ax: draw_simple(ax, bm_month, month_dots, [2018, 2025, 2030]),
     [2018, 2025, 2030],
 )
 
-# Figure A8 — Season
+# Figure C.9 — Season
 season_dots = get_dots("season", [2018, 2025, 2030])
 bm_season   = get_bm_vals("season")
 save_figure(
-    "Figure_A8.pdf",
+    "Figure_C9.pdf",
     lambda ax: draw_simple(ax, bm_season, season_dots, [2018, 2025, 2030]),
     [2018, 2025, 2030],
 )

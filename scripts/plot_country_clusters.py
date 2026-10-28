@@ -1,12 +1,12 @@
 """
-Country clustering dendrogram (Figure A1).
+Country clustering dendrogram (Figure C.1).
 
 Hierarchical clustering of 22 European countries based on the cross-country
 Pearson similarity matrix (averaged over all four temporal dimensions and
 years 2018-2025).
 
-Input : results/calendar_effects/entsoe_cross_country_pearson.csv
-Output: paper/plots/Figure_A1.png
+Input : results/intermediate/entsoe_cross_country_pearson.csv
+Output: results/figures/Figure_C1.pdf
 """
 
 import os
@@ -29,8 +29,8 @@ matplotlib.rcParams.update({
 from config import COUNTRIES
 
 # ---------------------------------------------------------------------------
-BASE  = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-INPUT = os.path.join(BASE, 'results', 'calendar_effects',
+BASE  = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+INPUT = os.path.join(BASE, 'results', 'intermediate',
                      'entsoe_cross_country_pearson.csv')
 
 # ---------------------------------------------------------------------------
@@ -102,7 +102,7 @@ def cluster_countries(n_clusters: int = 7,
     plt.tight_layout()
 
     out = output_path or os.path.join(
-        BASE, 'paper', 'plots', 'Figure_A1.pdf')
+        BASE, 'results', 'figures', 'Figure_C1.pdf')
     os.makedirs(os.path.dirname(out), exist_ok=True)
     plt.savefig(out, dpi=300, bbox_inches='tight')
     plt.close(fig)

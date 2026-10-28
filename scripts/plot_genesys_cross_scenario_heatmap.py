@@ -8,7 +8,7 @@ For each temporal dimension: one 4x4 symmetric matrix where
   value     = mean Pearson rho averaged over COUNTRIES x YEARS (2018, 2025, 2030)
   diagonal  = 1 (same scenario)
 
-Output: paper/plots/stage3_genesys_cross_scenario_heatmap.png
+Output: results/figures/Figure_C3.pdf
 """
 
 import warnings
@@ -26,9 +26,9 @@ sys.path.insert(0, str(Path(__file__).parent))
 from config import COUNTRIES, GENESYS_YEARS, SCENARIOS
 
 # ── Paths ──────────────────────────────────────────────────────────────────────
-BASE         = Path(__file__).parent.parent.parent
+BASE         = Path(__file__).parent.parent
 GENESYS_FILE = BASE / "data" / "GENeSYS_MOD_prices.csv"
-OUT_DIR      = BASE / "paper" / "plots"
+OUT_DIR      = BASE / "results" / "figures"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 YEARS = GENESYS_YEARS   # [2018, 2025, 2030]
@@ -246,7 +246,7 @@ def make_figure(profiles: dict, available: list):
     cbar.ax.yaxis.set_label_position("left")
     cbar.set_label(r"Pearson $\rho$")
 
-    out_path = OUT_DIR / "Figure_A2.pdf"
+    out_path = OUT_DIR / "Figure_C3.pdf"
     fig.savefig(out_path, dpi=300, bbox_inches="tight")
     plt.close(fig)
     print(f"Saved: {out_path}")

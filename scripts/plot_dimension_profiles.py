@@ -8,8 +8,8 @@ Each of the four calendar dimensions gets one panel:
   ENTSO-E = black solid line / dark fill
   GENeSYS-MOD = red dashed line / red fill  (all scenarios pooled)
 
-Input : results/calendar_effects/stage2_ttest_groups_detail.csv
-Output: paper/plots/stage2_profiles.png
+Input : results/intermediate/stage2_ttest_groups_detail.csv
+Output: results/figures/Figure_6.pdf
 """
 
 import warnings
@@ -25,9 +25,9 @@ from matplotlib.gridspec import GridSpec
 from matplotlib.lines import Line2D
 
 # ── Paths ──────────────────────────────────────────────────────────────────────
-BASE  = Path(__file__).parent.parent.parent
-INPUT = BASE / "results" / "calendar_effects" / "stage2_ttest_groups_detail.csv"
-OUT   = BASE / "paper" / "plots" / "Figure_6.pdf"
+BASE  = Path(__file__).parent.parent
+INPUT = BASE / "results" / "intermediate" / "stage2_ttest_groups_detail.csv"
+OUT   = BASE / "results" / "figures" / "Figure_6.pdf"
 OUT.parent.mkdir(parents=True, exist_ok=True)
 
 # ── Constants ─────────────────────────────────────────────────────────────────

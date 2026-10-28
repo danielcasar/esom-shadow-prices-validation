@@ -10,9 +10,9 @@ One figure, two panels:
   A value of 1 means the model reproduces the full ENTSO-E amplitude.
   A value > 1 means the model underestimates price variability.
 
-Input:  results/calendar_effects/stage2_ttest_groups_detail.csv
-        results/calendar_effects/deviation_summary.csv
-Output: paper/plots/compression_by_year_and_cluster.png
+Input:  results/intermediate/stage2_ttest_groups_detail.csv
+        results/intermediate/deviation_summary.csv
+Output: results/figures/Figure_7.pdf
 """
 
 import warnings
@@ -29,10 +29,10 @@ import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
 # ── Paths ────────────────────────────────────────────────────────────────────
-BASE     = Path(__file__).parent.parent.parent
-DET_FILE = BASE / "results" / "calendar_effects" / "stage2_ttest_groups_detail.csv"
-DEV_FILE = BASE / "results" / "calendar_effects" / "deviation_summary.csv"
-OUT      = BASE / "paper" / "plots" / "Figure_7.pdf"
+BASE     = Path(__file__).parent.parent
+DET_FILE = BASE / "results" / "intermediate" / "stage2_ttest_groups_detail.csv"
+DEV_FILE = BASE / "results" / "intermediate" / "deviation_summary.csv"
+OUT      = BASE / "results" / "figures" / "Figure_7.pdf"
 OUT.parent.mkdir(parents=True, exist_ok=True)
 
 # ── Constants ─────────────────────────────────────────────────────────────────

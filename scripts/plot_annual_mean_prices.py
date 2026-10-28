@@ -7,7 +7,7 @@ Paper figure: Annual mean electricity prices.
   Side-by-side boxes at years shared by both sources (2018, 2025).
   X-axis break between 2025 and 2030 to avoid the visual gap.
 
-Output: Code/paper/plots/Figure_4.png
+Output: results/figures/Figure_4.pdf
 """
 
 import warnings
@@ -26,10 +26,10 @@ sys.path.insert(0, str(Path(__file__).parent))
 from config import COUNTRIES, ANALYSIS_YEARS, SCENARIOS
 
 # ── Paths ──────────────────────────────────────────────────────────────────────
-BASE         = Path(__file__).parent.parent.parent
+BASE         = Path(__file__).parent.parent
 ENTSOE_FILE  = BASE / "data" / "ENTSOE_day_ahead_prices.csv"
 GENESYS_FILE = BASE / "data" / "GENeSYS_MOD_prices.csv"
-OUT_DIR      = BASE / "paper" / "plots"
+OUT_DIR      = BASE / "results" / "figures"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 MIN_HOURS  = 7500
