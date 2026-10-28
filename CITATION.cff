@@ -5,7 +5,7 @@ type: software
 authors:
   - family-names: Cäsar
     given-names: Daniel
-    email: daniel.caesar@tuwien.ac.at
+    email: caesar@eselab.tuwien.ac.at
     affiliation: "Energy System Economics Lab, Institute of Net-Zero Energy Systems, Technische Universität Wien, Austria"
   - family-names: Neumann
     given-names: Anne
