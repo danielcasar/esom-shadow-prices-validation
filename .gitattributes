@@ -1,0 +1,2 @@
+# Keep data files byte-identical across platforms (checksums in data/checksums.sha256)
+data/** -text
