@@ -102,10 +102,6 @@ All outputs are named by their number in the paper.
   from the coordinates in `results/figures/Figure_1_data.csv` (written by
   `08_tables.py`).
 
-Tables 1–3, 10, C.1, and C.2 and Figures 2 and 3 are descriptive or
-conceptual and involve no computation; the literature ranges in Table 9 are
-taken from the cited studies.
-
 ---
 
 ## License and citation
