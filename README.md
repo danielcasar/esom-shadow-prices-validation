@@ -10,7 +10,7 @@ Corresponding author: Daniel Cäsar — caesar@eselab.tuwien.ac.at
 
 This package contains all data and code needed to reproduce every table,
 figure, and number reported in the paper. Table and figure numbers below refer
-to the revised manuscript (appendices A–C).
+to the manuscript (appendices A–C).
 
 ---
 
