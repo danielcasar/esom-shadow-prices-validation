@@ -31,7 +31,7 @@ import pandas as pd
 from scipy.stats import pearsonr
 
 from config import (COUNTRIES, ENTSOE_PRICES_FILE, ENTSOE_YEARS, GENESYS_PRICES_FILE,
-                    GENESYS_YEARS, RESULTS_DIR, SCENARIOS)
+                    GENESYS_YEARS, RESULTS_DIR, SCENARIOS, model_calendar)
 
 warnings.filterwarnings('ignore')
 
@@ -155,9 +155,9 @@ def entsoe_cross_country(entsoe: pd.DataFrame) -> pd.DataFrame:
 # 3. GENeSYS-MOD cross-country
 # ---------------------------------------------------------------------------
 
-def _model_time_map(year: int) -> pd.DataFrame:
-    """Map Hour 1-8760 to calendar dimensions for a given model year."""
-    idx = pd.date_range(start=f'{year}-01-01', periods=8760, freq='h')
+def _model_time_map() -> pd.DataFrame:
+    """Map Hour 1-8760 to calendar dimensions (model calendar, see config.py)."""
+    idx = model_calendar()
     tm = pd.DataFrame({
         'Hour'   : range(1, 8761),
         'hour'   : idx.hour,
@@ -171,8 +171,8 @@ def _model_time_map(year: int) -> pd.DataFrame:
 def genesys_cross_country(genesys: pd.DataFrame) -> pd.DataFrame:
     available = [c for c in COUNTRIES if c in genesys.columns]
     rows = []
+    tm = _model_time_map()
     for year in GENESYS_YEARS:
-        tm = _model_time_map(year)
         for scenario in SCENARIOS:
             sub = genesys[(genesys['year'] == year) & (genesys['scenario'] == scenario)].copy()
             if sub.empty:

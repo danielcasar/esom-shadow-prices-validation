@@ -23,7 +23,7 @@ import matplotlib.pyplot as plt
 from scipy.stats import pearsonr
 
 sys.path.insert(0, str(Path(__file__).parent))
-from config import COUNTRIES, GENESYS_YEARS, SCENARIOS
+from config import COUNTRIES, GENESYS_YEARS, SCENARIOS, model_calendar
 
 # ── Paths ──────────────────────────────────────────────────────────────────────
 BASE         = Path(__file__).parent.parent
@@ -72,8 +72,8 @@ matplotlib.rcParams.update({
 
 # ── Calendar mapping ───────────────────────────────────────────────────────────
 
-def build_time_map(year: int) -> pd.DataFrame:
-    idx = pd.date_range(start=f"{year}-01-01", periods=8760, freq="h")
+def build_time_map() -> pd.DataFrame:
+    idx = model_calendar()
     tm = pd.DataFrame({
         "Hour"   : range(1, 8761),
         "hour"   : idx.hour,
@@ -92,8 +92,8 @@ def build_profiles(df_raw: pd.DataFrame, available: list) -> dict:
     """
     profiles = {dim: {s: {} for s in SCENARIOS} for dim in DIM_LABELS}
 
+    tm = build_time_map()
     for year in YEARS:
-        tm = build_time_map(year)
         for scenario in SCENARIOS:
             sub = df_raw[
                 (df_raw["year"] == year) & (df_raw["scenario"] == scenario)

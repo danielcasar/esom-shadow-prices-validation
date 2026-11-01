@@ -1,11 +1,12 @@
 """
-config.py — Settings shared by all scripts: countries, years, scenarios, clusters, and paths.
+config.py — Settings shared by all scripts: countries, years, scenarios, clusters, paths, and the GENeSYS-MOD calendar.
 
-Countries, years, scenarios, regions, and repository paths are defined here.
 All scripts import their configuration from this file.
 """
 
 from pathlib import Path
+
+import pandas as pd
 
 # ── Repository paths ──────────────────────────────────────────────────────────
 BASE        = Path(__file__).resolve().parent.parent
@@ -33,6 +34,20 @@ GENESYS_YEARS = [2018, 2025, 2030]
 
 # Union of both year sets (for scripts that combine both sources)
 ANALYSIS_YEARS = sorted(set(ENTSOE_YEARS) | set(GENESYS_YEARS))
+
+# ── GENeSYS-MOD calendar ──────────────────────────────────────────────────────
+# GENeSYS-MOD hours (Hour 1-8760) carry no dates. In every model year they
+# follow the same 365-day calendar: Hour 1 is 00:00 on 1 January, and the
+# weekly price pattern places Saturday and Sunday on days 5 and 6 of the year,
+# i.e. 1 January is a Tuesday. Hour-of-day, day-of-week, month and season of
+# the model prices are therefore taken from one non-leap year that starts on a
+# Tuesday (2030), not from the calendar of each model year.
+MODEL_CALENDAR_START = "2030-01-01"
+
+
+def model_calendar(n_hours: int = 8760) -> pd.DatetimeIndex:
+    """Timestamps of GENeSYS-MOD Hour 1 ... n_hours (used for calendar groups only)."""
+    return pd.date_range(MODEL_CALENDAR_START, periods=n_hours, freq="h")
 
 # ── Scenarios ─────────────────────────────────────────────────────────────────
 SCENARIOS = ["GoRES", "NECPEssentials", "REPowerEU++", "Trinity"]

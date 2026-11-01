@@ -28,7 +28,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 import sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from config import COUNTRIES, SCENARIOS, ENTSOE_YEARS, GENESYS_YEARS
+from config import COUNTRIES, SCENARIOS, ENTSOE_YEARS, GENESYS_YEARS, model_calendar
 
 # ---------------------------------------------------------------------------
 # Paths
@@ -71,7 +71,7 @@ def _read_genesys() -> pd.DataFrame:
 
 
 def _add_time_dims(df: pd.DataFrame) -> pd.DataFrame:
-    """Attach hour / weekday / month / season / year columns."""
+    """Attach hour / weekday / month / season columns."""
     df = df.copy()
     if not isinstance(df.index, pd.DatetimeIndex):
         df['timestamp'] = pd.to_datetime(df['timestamp'])
@@ -79,7 +79,6 @@ def _add_time_dims(df: pd.DataFrame) -> pd.DataFrame:
     df['hour']    = df.index.hour         # 0–23
     df['weekday'] = df.index.weekday      # 0=Mon … 6=Sun
     df['month']   = df.index.month        # 1–12
-    df['year']    = df.index.year
     df['season']  = df['month'].map(MONTH_TO_SEASON)   # 1=Winter … 4=Autumn
     return df
 
@@ -107,9 +106,8 @@ def load_genesys(country: str, scenario: str, year: int) -> pd.DataFrame | None:
           .reset_index(drop=True))
     if len(df) == 0:
         return None
-    # Reconstruct hourly timestamps (GENeSYS rows are ordered hour 0 … 8759)
-    start      = pd.Timestamp(f'{year}-01-01')
-    df['timestamp'] = [start + pd.Timedelta(hours=h) for h in range(len(df))]
+    # Hourly timestamps of the model calendar (rows are ordered Hour 1 … 8760)
+    df['timestamp'] = model_calendar(len(df))
     series = (df[['timestamp', country]]
               .rename(columns={country: 'price'})
               .set_index('timestamp')
