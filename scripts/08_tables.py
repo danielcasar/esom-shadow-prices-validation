@@ -7,7 +7,7 @@ Sections (in paper order):
   Table 5      distributional properties (2025); Section 3.1 ranges; abstract
   Tables 6, 7, C.3   Stage 1 and Stage 2 summaries, multiple-testing check
   Table 8, C.4 benchmark values, bootstrap CI widths, sub-period benchmark,
-               day-of-week cluster-mean rho (Section 3.4.2), Pearson-Spearman MAE
+               Pearson-Spearman MAE
   Tables 9, 11, C.5, C.6   daily spreads and corrected spreads
 
 Inputs
@@ -365,16 +365,7 @@ def table_c4(cy: pd.DataFrame, log: ValueLog) -> None:
 
 
 def text_section_3_4(log: ValueLog) -> None:
-    """Section 3.4.2 (range of the day-of-week cluster-mean model-market rho of
-    Figures 9 and C.7) and Section 3.4.3 (mean absolute Pearson-Spearman difference)."""
-    mm = pd.read_csv(RESULTS_DIR / "genesys_vs_entsoe_year_pearson.csv")
-    dow = mm[mm["dimension"] == "weekday"]
-    rho = {(year, name): dow[(dow["genesys_year"] == year) & dow["country"].isin(members)]["pearson_r"].mean()
-           for year in GENESYS_YEARS for name, members in CLUSTERS.items()}
-    others = [v for key, v in rho.items() if key != (2018, "IE")]
-    log.add("Section 3.4.2", "weekday cluster-mean rho, minimum (excl. IE 2018)", min(others))
-    log.add("Section 3.4.2", "weekday cluster-mean rho, maximum (excl. IE 2018)", max(others))
-    log.add("Section 3.4.2", "weekday cluster-mean rho, IE 2018", rho[(2018, "IE")])
+    """Section 3.4.3 (mean absolute Pearson-Spearman difference)."""
     s3 = pd.read_csv(RESULTS_DIR / "stage3_pearson_correlations.csv")
     for dim, v in (s3["pearson_r"] - s3["spearman_r"]).abs().groupby(s3["dimension"]).mean().items():
         log.add("Section 3.4.3", f"{dim} Pearson-Spearman MAE", v)
