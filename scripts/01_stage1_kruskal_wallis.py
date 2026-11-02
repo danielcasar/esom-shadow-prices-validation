@@ -23,7 +23,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 import sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from config import COUNTRIES, SCENARIOS, ENTSOE_YEARS, GENESYS_YEARS
+from config import COUNTRIES, SCENARIOS, ENTSOE_YEARS, GENESYS_YEARS, model_calendar
 
 # ---------------------------------------------------------------------------
 # Paths
@@ -79,7 +79,6 @@ def _add_time_dims(df: pd.DataFrame) -> pd.DataFrame:
     df['hour']    = df.index.hour
     df['weekday'] = df.index.weekday
     df['month']   = df.index.month
-    df['year']    = df.index.year
     df['season']  = df['month'].map(MONTH_TO_SEASON)
     return df
 
@@ -103,8 +102,7 @@ def load_genesys(country: str, scenario: str, years: list) -> pd.DataFrame | Non
     parts = []
     for year in sorted(df['year'].unique()):
         chunk = df[df['year'] == year].reset_index(drop=True)
-        start = pd.Timestamp(f'{year}-01-01')
-        chunk['timestamp'] = [start + pd.Timedelta(hours=h) for h in range(len(chunk))]
+        chunk['timestamp'] = model_calendar(len(chunk))   # same calendar in every model year
         parts.append(chunk[['timestamp', country]])
     combined = (pd.concat(parts, ignore_index=True)
                   .rename(columns={country: 'price'})

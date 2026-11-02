@@ -18,7 +18,7 @@ import pandas as pd
 from pathlib import Path
 import sys
 sys.path.insert(0, str(Path(__file__).parent))
-from config import COUNTRIES, SCENARIOS
+from config import COUNTRIES, SCENARIOS, model_calendar
 
 # ── Paths ─────────────────────────────────────────────────────────────────────
 BASE       = Path(__file__).parent.parent
@@ -43,11 +43,9 @@ SEASON_MAP = {12: "DJF", 1: "DJF", 2: "DJF",
               9:  "SON", 10: "SON", 11: "SON"}
 
 
-# ── Build calendar for 2025 (8760 hours, non-leap year) ──────────────────────
-def build_calendar_2025():
+# ── Calendars (8760 hours): ENTSO-E 2025, and the GENeSYS-MOD model calendar ──
+def build_calendar(timestamps: pd.DatetimeIndex) -> pd.DataFrame:
     """Return a DataFrame with one row per hour (Hour 1..8760) and group columns."""
-    # Hour 1 = 2025-01-01 00:00 UTC
-    timestamps = pd.date_range("2025-01-01", periods=8760, freq="h", tz="UTC")
     cal = pd.DataFrame({
         "Hour":    np.arange(1, 8761),
         "hour_of_day": timestamps.hour,
@@ -58,7 +56,8 @@ def build_calendar_2025():
     return cal
 
 
-CAL = build_calendar_2025()
+CAL_ENTSOE = build_calendar(pd.date_range("2025-01-01", periods=8760, freq="h", tz="UTC"))
+CAL_MODEL  = build_calendar(model_calendar())
 GROUP_COL = {"hour": "hour_of_day", "weekday": "weekday",
              "month": "month", "season": "season"}
 
@@ -86,7 +85,7 @@ assert len(df_e) == 8760, f"Expected 8760 ENTSOE 2025 rows, got {len(df_e)}"
 
 # Attach calendar (already sorted chronologically)
 for col in ["hour_of_day", "weekday", "month", "season"]:
-    df_e[col] = CAL[col].values
+    df_e[col] = CAL_ENTSOE[col].values
 
 print(f"  ENTSOE 2025: {len(df_e)} hourly rows, {len(COUNTRIES)} countries")
 
@@ -103,7 +102,7 @@ for sc in SCENARIOS:
     part = df_g[df_g["scenario"] == sc].sort_values("Hour").reset_index(drop=True)
     assert len(part) == 8760, f"Expected 8760 rows for {sc}, got {len(part)}"
     for col in ["hour_of_day", "weekday", "month", "season"]:
-        part[col] = CAL[col].values
+        part[col] = CAL_MODEL[col].values
     merged_parts.append(part)
 df_g = pd.concat(merged_parts, ignore_index=True)
 

@@ -55,8 +55,14 @@ Barani et al., 2025) for the four scenarios GoRES, NECP Essentials,
 REPowerEU++ and Trinity.
 
 **Columns.** `year` (model year), `scenario`, `Hour` (1–8760, hour of the
-model year; hour 1 is mapped to 1 January 00:00 of that year), followed by one
-column per model region (EUR/MWh).
+model year), followed by one column per model region (EUR/MWh).
+
+**Calendar.** The model hours carry no dates. In every model year they follow
+the same 365-day calendar: hour 1 is 1 January 00:00, and 1 January is a
+Tuesday (the model's two lowest-price days of the week are always days 5 and 6
+of the year). The analysis derives hour of day, day of week, month and season
+from this calendar (`model_calendar` in `scripts/config.py`), not from the
+calendar of each model year.
 
 **Processing.** The four raw model output files
 `output_marginals_{gores,necpessentials,repowereu,trinity}.csv` (long format:
