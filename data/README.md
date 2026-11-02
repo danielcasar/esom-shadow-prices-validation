@@ -51,8 +51,8 @@ season) are derived from the UTC timestamps.
 **Source.** Dual values of the hourly regional power-balance constraint of the
 Global Energy System Model (GENeSYS-MOD; Löffler et al., 2017), run with the
 scenario inputs of the European Energy Vision 2060 project (EnVis-2060;
-Barani et al., 2025) for the four scenarios GoRES, NECP Essentials,
-REPowerEU++ and Trinity.
+Barani et al., 2025; scenario data: Löffler et al., 2024) for the four
+scenarios GoRES, NECP Essentials, REPowerEU++ and Trinity.
 
 **Columns.** `year` (model year), `scenario`, `Hour` (1–8760, hour of the
 model year), followed by one column per model region (EUR/MWh).
@@ -88,7 +88,9 @@ and the sum of onshore and offshore wind, 22 analysis countries, 2025).
 ## Solar and wind production (model) — `GENeSYS_MOD_vre_production_2025.csv`
 
 **Source.** GENeSYS-MOD EU-EnVis-2060 v1.2.0 production output
-(`output_production.csv`, 1.08 GB, not included).
+(`output_production.csv`, 1.08 GB, not included), published on Zenodo
+(Löffler et al., 2025). The EnVis-2060 datasets are published under CC BY 4.0;
+this extract is redistributed under the same licence with attribution.
 
 **Columns.** `Model Version`, `PathwayScenario`, `Region`, `carrier`
 (`solar` = all PV technologies, `wind` = all wind technologies of the power
@@ -107,3 +109,10 @@ technologies (the analysis uses GoRES = `Green_CO2_exo_globalLimit`).
 - Löffler, K., et al. (2017). Designing a model for the global energy system —
   GENeSYS-MOD: An application of the Open-Source Energy Modeling System
   (OSeMOSYS). *Energies*, 10(10), 1468.
+- Löffler, K., et al. (2024). The European Energy Vision 2060 (EU EnVis-2060):
+  Scenario Parametrization [Data set, all versions]. Zenodo.
+  <https://doi.org/10.5281/zenodo.13710868>
+- Löffler, K., Moskalenko, N., & Bornemann, J. (2025). The European Energy
+  Vision 2060 (EU EnVis-2060) Scenarios: Pan-European Quantification with
+  GENeSYS-MOD (Version 1.2) [Data set]. Zenodo.
+  <https://doi.org/10.5281/zenodo.17079357>
