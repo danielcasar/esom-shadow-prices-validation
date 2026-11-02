@@ -51,7 +51,7 @@ season) are derived from the UTC timestamps.
 **Source.** Dual values of the hourly regional power-balance constraint of the
 Global Energy System Model (GENeSYS-MOD; Löffler et al., 2017), run with the
 scenario inputs of the European Energy Vision 2060 project (EnVis-2060;
-Barani et al., 2025; scenario data: Löffler et al., 2024) for the four
+Barani et al., 2026; scenario data: Löffler et al., 2024) for the four
 scenarios GoRES, NECP Essentials, REPowerEU++ and Trinity.
 
 **Columns.** `year` (model year), `scenario`, `Hour` (1–8760, hour of the
@@ -103,8 +103,9 @@ technologies (the analysis uses GoRES = `Green_CO2_exo_globalLimit`).
 
 ## References
 
-- Barani, M., et al. (2025). European Energy Vision 2060: Charting diverse
-  pathways for Europe's energy transition. arXiv:2501.12993.
+- Barani, M., et al. (2026). European energy vision 2050 and beyond: Designing
+  scenarios for Europe's energy transition. *Renewable and Sustainable Energy
+  Reviews*, 225, 116074. <https://doi.org/10.1016/j.rser.2025.116074>
 - ENTSO-E (2026). ENTSO-E Transparency Platform. <https://transparency.entsoe.eu/>
 - Löffler, K., et al. (2017). Designing a model for the global energy system —
   GENeSYS-MOD: An application of the Open-Source Energy Modeling System
