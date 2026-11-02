@@ -80,11 +80,12 @@ retrieval dates, variables, units, processing steps, and checksums.
 |------|--------|
 | `ENTSOE_day_ahead_prices.csv` | ENTSO-E Transparency Platform, day-ahead prices [12.1.D], 2015–2025 |
 | `ENTSOE_vre_generation_2025.csv` | ENTSO-E Transparency Platform, actual generation per production type [16.1.B&C], 2025 |
-| `GENeSYS_MOD_prices.csv` | GENeSYS-MOD shadow prices (Löffler et al., 2017) for the EnVis-2060 scenarios (Barani et al., 2025), 2018–2060 |
-| `GENeSYS_MOD_vre_production_2025.csv` | GENeSYS-MOD EU-EnVis-2060 v1.2.0 solar and wind production, 2025 |
+| `GENeSYS_MOD_prices.csv` | GENeSYS-MOD shadow prices (Löffler et al., 2017) for the EnVis-2060 scenarios (Barani et al., 2025; scenario data: Löffler et al., 2024, doi:10.5281/zenodo.13710868), 2018–2060 |
+| `GENeSYS_MOD_vre_production_2025.csv` | GENeSYS-MOD EU-EnVis-2060 v1.2.0 solar and wind production, 2025 (Löffler et al., 2025, doi:10.5281/zenodo.17079357) |
 
 ENTSO-E data are redistributed with attribution as required by the ENTSO-E
-Transparency Platform terms of use.
+Transparency Platform terms of use; the EnVis-2060 datasets are published
+under CC BY 4.0.
 
 ---
 
